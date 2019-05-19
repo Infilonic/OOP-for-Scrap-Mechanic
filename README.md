@@ -11,7 +11,7 @@ This project enables familiar object oriented syntax in Lua for the game Scrap M
 Because the Scrap Mechanic developers, only provide a limited Lua environment, it is currently (14.05.2019) not possible to implement more advanced functionalities, like access modifiers, finalizers etc.
 
 ## Features
-- Syntax, which allows familiar syntax for the creation of classes
+- Familiar syntax which allows the creation of classes
 	- `class "Object" { ... }`
 	- `class "Generic" extends "Object" { ... }`
 	- `new "Object"()`
@@ -19,10 +19,10 @@ Because the Scrap Mechanic developers, only provide a limited Lua environment, i
 
 ```lua
 class "Object" {
-	public = {
-		__construct = function (self, arg1, arg2)
-		end
-	}
+    public = {
+        __construct = function (self, arg1, arg2)
+        end
+    }
 }
 
 new "Object"(arg1, arg2)
@@ -33,28 +33,28 @@ new "Object"(arg1, arg2)
 
 ```lua
 class "Animal" {
-	public = {
-		__construct = function (self)
-		end;
-	}
+    public = {
+        __construct = function (self)
+        end;
+    }
 }
 
 class "Wolf" extends "Animal" {
-	public = {
-		furrColor = "";
-		__construct = function (self, furrColor)
-			self.furrColor = furrColor
-		end
-	}
+    public = {
+        furrColor = "";
+        __construct = function (self, furrColor)
+            self.furrColor = furrColor
+        end
+    }
 }
 
 class "Dog" extends "Wolf" {
-	public = {
-		breed = "";
-		__construct = function (self, furrColor, breed)
-			self.breed = breed
-		end
-	}
+    public = {
+        breed = "";
+        __construct = function (self, furrColor, breed)
+            self.breed = breed
+        end
+    }
 }
 ```
 
@@ -92,27 +92,27 @@ Your directory & file structure could look like this:
 +-- preview.jpg
 ```
 
-After you've selected an appropriate folder copied the files in your mod, you have to load the SyntaxConstructor in your code. In order to do that, your main script files, which get called by Scrap Mechanic, have to load in the `InitSyntaxConstructor.lua` file once by running `dofile("InitSyntaxConstructur.lua")`.
+After you've selected an appropriate folder and copied the files in your mod, you have to load the SyntaxConstructor in your code. In order to do that, your main script files, which gets called by Scrap Mechanic, has to load in the `InitSyntaxConstructor.lua` file once by running `dofile("InitSyntaxConstructur.lua")`.
 
-Depending on the path, where your script file is saved, you have to navigate accordingly to the path, where `InitSyntaxConstructor.lua` is saved.
+Depending on the path where your script file is saved, you have to navigate accordingly to the path where `InitSyntaxConstructor.lua` is saved.
 
 After you've successfully loaded the `InitSyntaxConstructor.lua` file, you can start writing your classes.
 
 In order for Scrap Mechanic to use those classes, the classes have first to be compiled.
-After that, you also need to prepare some global variables of your classes. The global variables are nothing else than concrete instances of your classes. Scrap Mechanic uses its own `class()` function to make these variables callable and to create a new instance for each shape you create in your world.
+You also need to prepare some global variables for your classes. The global variables are nothing else than concrete instances of your classes. Scrap Mechanic uses its own `class()` function to make these variables callable and to creates a new instance for each shape you create in your world.
 
 The SyntaxConstructor object provides a function to compile and create callable global variables automatically for you.
 
-After you've wrote all your classes and loaded them all with the `dofile(filename)` function, you can run the following functions to make them accessible for Scrap Mechanic:
+After you've written and loaded all your classes with the `dofile(filename)` function, you can call the following functions to make them accessible for Scrap Mechanic:
 - `syntaxConstructor.compiler:compile()`
 - `syntaxConstructor:initSMObjects()`
 
 Be advised, that these functions have to be called at the end of all other calls and operations that all of your other scripts run. Read the chapter "Best practices" in order to get a picture of how to create your mods with this syntax extension.
 
 # Best Practices
-This section discusses the best practices of how to use the syntax extension library in combination with Scrap Mechanic mod development.
+This section discusses the best practices on how to use the syntax extension library in combination with Scrap Mechanic mod development.
 
-This part requires, that you're already familiar with creating modifications for Scrap Mechanic, and that you know, how to create scripted parts / tools and so on.
+This part requires that you're already familiar with the process of creating modifications for Scrap Mechanic, and that you know, how to create scripted parts / tools.
 
 If you're not familiar with the creation process of a Scrap Mechanic mod, have a look at the following ressources:
 - [Scrap Mechanic Wiki (Modding)](https://scrapmechanic.gamepedia.com/Modding)
@@ -122,10 +122,10 @@ If you're not familiar with the creation process of a Scrap Mechanic mod, have a
 As of now, Scrap Mechanic uses the LuaJIT runtime environment. The latest stable version of LuaJIT supports Lua 5.1. You're not able to use functions from versions higher than 5.1.
 
 ## How to start
-It is assumed, that you start with a blank Scrap Mechanic mod in order to have an easy and clean start with this library.
+It is assumed, that you start with a blank Scrap Mechanic mod, in order to have an easy and clean start with this library.
 
 - Copy the library files in the `Scripts` folder of your Scrap Mechanic mod
-- It's a good thing to put the content of the library in a separate folder
+- It's a good thing to put the library content in a separate folder
 
 ```
 .
@@ -155,34 +155,34 @@ syntaxConstructor:initSMObjects()
 ```
 
 ## Write your own classes
-It is recommended to put each class in its own file, to keep a good organisation of your classes. Name the file the same way you name your class. Put your classes in the folder they belong to. If you're writing scripts for multiple parts, put each script in its own folder. You may never know, if you need additional classes, that are needed by your part. In the end, the folder structure is up to you, but keep it simple and clear.
+It is recommended to put each class in its own file, in order to keep your classes organized. Name your files the same way as the classes they contain. Put your class files in the folder they belong to. If you're writing scripts for multiple parts, put each part-script in its own folder. You may never know, if you need additional classes for a single scripted part. In the end, the folder structure is up to you, but keep it simple and clear.
 
 All your scripted parts in the `parts.json` should run the `Main.lua` file. Don't write your classes in the `Main.lua` file, in order to prevent cluttering the file and making it unreadable.
 
-Set the `classname` property of the according part in your `parts.json` file, to the same name of your future class.
+Set the `classname` property of the according part in your `parts.json` file, to the same name of your future class file and the class in it.
 
-Your class could look like this. Remember, this example shows the complete syntax of how to create a class and how to create a concrete instance of your just written type.
+Your class could look like this. Remember, this example shows the syntax of how to create a class and how to create a concrete instance of that written class.
 
 Create class:
 ```lua
 class "Example" extends "Object" {
-	public = {
-		__construct = function (self)
-		
-		end;
-		
-		helloWorld = function (self)
-			return "Hello world!"
-		end;
-		
-		myPrint = function (self, text)
-			print(text)
-		end;
-		
-		mySecondPrint = function (self, ...)
-			print(...)
-		end;
-	}
+    public = {
+        __construct = function (self)
+
+        end;
+
+        helloWorld = function (self)
+            return "Hello world!"
+        end;
+
+        myPrint = function (self, text)
+            print(text)
+        end;
+
+        mySecondPrint = function (self, ...)
+            print(...)
+        end;
+    }
 }
 ```
 
@@ -206,74 +206,74 @@ syntaxConstructor.compiler:compile()
 syntaxConstructor:initSMObjects()
 ```
 
-To see the class in action, you have to reload your world, where the Scrap Mechanic mod is used. Right now there is no automatic way to reload all classes and recompile them.
+To see the class in action, you have to reload your world, where your Scrap Mechanic mod is used. Right now there is no automatic way to reload all classes and recompile them.
 
 Also there is now way to load your script files automatically, because of the limitations of the scripting environment of Scrap Mechanic.
 
 ## Example usage (World cleaner mod)
 I build a small Scrap Mechanic mod to have a better demonstration on how to use this library.
 
-First we will have a look at the `parts.json` file, which shows how to define the scripted part and how to use the `Main.lua` file.
-Then we will write a small class, which contains the logic for the world cleaning. After that, all the needed files will be loaded by the `Main.lua` file, compiled and made available as gobal variable, ready for Scrap Mechanic to use the functionalities of our class.
+First we will have a look at the `parts.json` file, which shows how to define the scripted part and again how to use the `Main.lua` file.
+Then we will write a small class, which contains the logic for the world cleaning. After that, all the needed files will be loaded by the `Main.lua` script, compiled and made available as gobal variable, ready for Scrap Mechanic to use the functionalities of our class.
 
 ### Create the scripted part (parts.json)
 We will keep our effort to a minimum and use the ingame models and textures for our scripted part.
 
 ```json
 {
-	"partList": [
-		{
-			"uuid": "687da9d2-b02c-4661-925c-fc605915a5ca",
-			"renderable": {
-				"lodList": [
-					{
-						"subMeshList": [
-							{
-								"textureList": [
-									"$GAME_DATA/Objects/Textures/interactive/obj_interactive_logicgate_dif.tga",
-									"$GAME_DATA/Objects/Textures/interactive/obj_interactive_logicgate_asg.tga",
-									"$GAME_DATA/Objects/Textures/interactive/obj_interactive_logicgate_nor.tga"
-								],
-								"material": "PoseAnimDifAsgNor"
-							},
-							{
-								"textureList": [
-									"$GAME_DATA/Objects/Textures/interactive/obj_interactive_logicgate_dif.tga",
-									"$GAME_DATA/Objects/Textures/interactive/obj_interactive_logicgate_asg.tga",
-									"$GAME_DATA/Objects/Textures/interactive/obj_interactive_logicgate_nor.tga"
-								],
-								"material": "UVAnimDifAsgNor",
-								"custom":
-								{
-									"uv0": { "u": 0.16666667, "v": 0.1645 }
-								}
-							}
-						],
-						"mesh": "$GAME_DATA/Objects/Mesh/interactive/obj_interactive_logicgate_off.fbx",
-						"pose0": "$GAME_DATA/Objects/Mesh/interactive/obj_interactive_logicgate_on.fbx"
-					}
-				]
-			},
-			"rotationSet": "PropYZ",
-			"color": "FFA010",
-			"box": { "x": 1, "y": 1, "z": 1 },
-			"density": 250.0,
-			"physicsMaterial": "Metal",
-			"qualityLevel": 3,
-			"sticky": "+X+Y+Z-X-Y-Z",
-			"scripted": {
-				"filename": "$MOD_DATA/Scripts/Main.lua",
-				"classname": "WorldCleaner",
-				"data": {
-					"version": 0.0
-				}
-			}
-		}
-	]
+    "partList": [
+        {
+            "uuid": "687da9d2-b02c-4661-925c-fc605915a5ca",
+            "renderable": {
+                "lodList": [
+                    {
+                        "subMeshList": [
+                            {
+                                "textureList": [
+                                    "$GAME_DATA/Objects/Textures/interactive/obj_interactive_logicgate_dif.tga",
+                                    "$GAME_DATA/Objects/Textures/interactive/obj_interactive_logicgate_asg.tga",
+                                    "$GAME_DATA/Objects/Textures/interactive/obj_interactive_logicgate_nor.tga"
+                                ],
+                                "material": "PoseAnimDifAsgNor"
+                            },
+                            {
+                                "textureList": [
+                                    "$GAME_DATA/Objects/Textures/interactive/obj_interactive_logicgate_dif.tga",
+                                    "$GAME_DATA/Objects/Textures/interactive/obj_interactive_logicgate_asg.tga",
+                                    "$GAME_DATA/Objects/Textures/interactive/obj_interactive_logicgate_nor.tga"
+                                ],
+                                "material": "UVAnimDifAsgNor",
+                                "custom":
+                                {
+                                    "uv0": { "u": 0.16666667, "v": 0.1645 }
+                                }
+                            }
+                        ],
+                        "mesh": "$GAME_DATA/Objects/Mesh/interactive/obj_interactive_logicgate_off.fbx",
+                         "pose0": "$GAME_DATA/Objects/Mesh/interactive/obj_interactive_logicgate_on.fbx"
+                    }
+                ]
+            },
+            "rotationSet": "PropYZ",
+            "color": "FFA010",
+            "box": { "x": 1, "y": 1, "z": 1 },
+            "density": 250.0,
+            "physicsMaterial": "Metal",
+            "qualityLevel": 3,
+            "sticky": "+X+Y+Z-X-Y-Z",
+            "scripted": {
+                "filename": "$MOD_DATA/Scripts/Main.lua",
+                "classname": "WorldCleaner",
+                "data": {
+                    "version": 0.0
+                }
+            }
+        }
+    ]
 }
 ```
 
-As you might have noticed, we won't load a separate file for our part, even if we would define multiple parts. The parts in the `parts.json` file only load the `Main.lua` script file. Otherwise, the class might not be available immidiatly or at all (if the Syntax Extension library was never loaded). The `classname` property can take the same name as the script class (and in this case file).
+As you might have noticed, we won't load a separate file for our part, even if we would define multiple parts with different classes and therefore files. The parts in the `parts.json` file only load the `Main.lua` script file. Otherwise, the class might not be available immediately or at all (in case the Syntax Extension library was never loaded). The `classname` property can take the same name as the class (and in this case also the same file name).
 
 You can change the properties as you like (color, qualityLevel, physicsMaterial etc.).
 
@@ -340,7 +340,7 @@ You could also use the `Shape` class to create new functionalities for your scri
 ...
 WorldCleanerClass = new "Shape"()
 WorldCleanerClass.server_onCreate = function (self) -- // Overwriting the existing server_onCreate function
-	-- // Your creation logic
+    -- // Your creation logic
 end
 
 WorldCleaner = smInit(WorldCleanerClass) -- // Making the class available to use for Scrap Mechanic
