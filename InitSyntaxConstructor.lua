@@ -1,9 +1,10 @@
 syntaxConstructor = {
     version = 0.0;
     initSMObjects = function (self)
-        for k, class in pairs(self.manager.compiledClasses) do
+        for k, _ in pairs(self.manager.compiledClasses) do
             _G[k] = smInit(new(k)())
         end
+        class = smInit
     end
 }
 
