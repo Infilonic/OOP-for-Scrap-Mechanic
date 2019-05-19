@@ -17,6 +17,7 @@ syntaxConstructor.instantiator = {
         end
 
         instance.type = compiledClass.type
+        instance.base = compiledClass.base
 
         return instance
     end;
@@ -25,7 +26,7 @@ syntaxConstructor.instantiator = {
         local callable = function (...)
             instance:__construct(...)
             instance.__construct = nil
-            
+
             return instance
         end
 

@@ -118,8 +118,8 @@ syntaxConstructor.compiler = {
 
         if concreteClass.base ~= nil then
             constructor = function (self, ...)
-                self.base.__construct(self, ...)
-                self:__construct(...)
+                self.base.members.__construct(self, ...)
+                self.members.__construct(self, ...)
             end
         end
 
