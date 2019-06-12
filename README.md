@@ -1,10 +1,6 @@
 # Lua syntax extension for Scrap Mechanic
 Ever wanted to write cleaner code, that not only looks good, but helps you to write more reusable code?
 
-[TOCM]
-
-[TOC]
-
 ## What is this?
 This project enables familiar object oriented syntax in Lua for the game Scrap Mechanic. Right now the project does not support many features known in other languages like C#, Java etc.
 
@@ -334,7 +330,7 @@ class "WorldCleaner" extends "Shape" {
 As you might have noticed, the `WorldCleaner` class inherits from the `Shape` class, which is an already built in type of the Syntax Extension library. You can extend from the `Shape` class whenever you need to create a new scripted shape with some default values and functions.
 
 ### Example usage of the Shape class
-You could also use the `Shape` class to create new functionalities for your scripted part. In this case, you could even load your files after the compilation and initialization process. You have to run the function `smInit(classInstance)` in order to use your prepared object within Scrap Mechanic.
+You could also use the `Shape` class to create new functionalities for your scripted part. In this case, you could even load your files after the compilation and initialization process. You have to run the function `smClass(classInstance)` in order to use your prepared object within Scrap Mechanic.
 
 ```lua
 ...
@@ -343,7 +339,7 @@ WorldCleanerClass.server_onCreate = function (self) -- // Overwriting the existi
     -- // Your creation logic
 end
 
-WorldCleaner = smInit(WorldCleanerClass) -- // Making the class available to use for Scrap Mechanic
+WorldCleaner = smClass(WorldCleanerClass) -- // Making the class available to use for Scrap Mechanic
 ...
 ```
 

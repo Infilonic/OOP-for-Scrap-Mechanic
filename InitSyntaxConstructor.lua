@@ -2,11 +2,13 @@ syntaxConstructor = {
     version = 0.0;
     initSMObjects = function (self)
         for k, _ in pairs(self.manager.compiledClasses) do
-            _G[k] = smInit(new(k)())
+            _G[k] = smClass(new(k)())
         end
-        class = smInit
+        class = smClass
     end
 }
+
+smClass = class
 
 dofile("./SCManager/SyntaxConstructorManager.lua")
 dofile("./SCCompiler/SyntaxConstructorCompiler.lua")
