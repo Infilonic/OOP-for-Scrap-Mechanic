@@ -84,10 +84,9 @@ class "List" {
 
             local iterator = function (list, i)
                 i = i + 1
-                local item = list:getAt(i)
 
-                if item ~= nil then
-                    return item
+                if i <= list:getLength() then
+                    return list:getAt(i)
                 end
             end
 

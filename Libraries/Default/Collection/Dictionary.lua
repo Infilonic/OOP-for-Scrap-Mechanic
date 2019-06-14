@@ -75,20 +75,19 @@ class "Dictionary" {
 
         iterate = function (self)
             local i = 0
-            local keys = self.keys
-            local values = self.values
+            local list = self.entries
 
             local iterator = function (list, key)
                 i = i + 1
-                local key = keys:getAt(i)
-                local value = values:getAt(i)
 
-                if key ~= nil then
-                    return key, value
+                if i <= list:getLength() then
+                    local keyValuePair = list:getAt(i)
+
+                    return keyValuePair:getKey(), keyValuePair:getValue()
                 end
             end
 
-            return iterator, nil, next
+            return iterator, list, next
         end
     }
 }
