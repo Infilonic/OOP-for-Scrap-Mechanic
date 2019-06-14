@@ -8,7 +8,7 @@ class "Shape" extends "Generic" {
             colorNormal,
             colorHighlight,
             poseWeightCount)
-            
+
             self.maxChildCount = maxChildCount
             self.maxParentCount = maxParentCount
             self.connectionInput = connectionInput
