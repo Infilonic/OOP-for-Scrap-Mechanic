@@ -1,7 +1,7 @@
 class "List" {
     public = {
         __construct = function (self)
-            self.listArray = {}
+            self.entries = {}
             self.length = 0
         end;
 
@@ -10,8 +10,8 @@ class "List" {
         end;
 
         addRange = function (self, list)
-            for i = 1, list:getLength(), 1 do
-                self:Add(list:getAt(i))
+            for item in list:iterate() do
+                self:add(item)
             end
         end;
 
@@ -19,14 +19,14 @@ class "List" {
             assert(index > 0, "Index out of range")
             assert(index <= self.length + 1, "Index out of range")
 
-            table.insert(self, index, object)
+            table.insert(self.entries, index, object)
             self.length = self.length + 1
         end;
 
         removeAt = function (self, index)
-            assert(index <= self.length, "Index out of range")
+            assert((index > 0 and index <= self.length), "Index out of range")
 
-            table.remove(self.listArray, index)
+            table.remove(self.entries, index)
             self.length = self.length - 1
         end;
 
@@ -43,40 +43,35 @@ class "List" {
         end;
 
         getAt = function (self, index)
-            local item
+            assert((index > 0 and index <= self.length), "Index out of range")
 
-            if self:contains(index) then
-                item = self.listArray[index]
-            end
+            return self.entries[index]
+        end;
 
-            return item
+        getFirst = function (self)
+            return self:getAt(1)
+        end;
+
+        getLast = function (self)
+            return self:getAt(self:getLength())
         end;
 
         clear = function (self)
             if self.length > 0 then
-                self.listArray = {}
+                self.entries = {}
                 self.length = 0
             end
         end;
 
         contains = function (self, object)
-            local contains = false
-
-            for i = 1, self.length, 1 do
-                if self:equals(object) then
-                    contains = true
-                    break
-                end
-            end
-
-            return contains
+            return self:indexOf(object) > 0
         end;
 
-        copyTo = function (self, list, listIndex)
-            assert((listIndex > 0 and listIndex <= self.length), "Index out of range")
+        copyTo = function (self, list, index)
+            assert((index > 0 and index <= self.length), "Index out of range")
 
-            for i = listIndex, self:getLength(), 1 do
-                list:add(self.listArray[i])
+            for i = index, self:getLength(), 1 do
+                list:add(self.entries[i])
             end
         end;
 
@@ -84,11 +79,26 @@ class "List" {
             return self:getRange(1, self.length)
         end;
 
+        iterate = function (self)
+            local list = self
+
+            local iterator = function (list, i)
+                i = i + 1
+                local item = list:getAt(i)
+
+                if item ~= nil then
+                    return item
+                end
+            end
+
+            return iterator, list, 0
+        end;
+
         foreach = function (self, action)
             assert(action ~= nil, "Argument 'action' is nil")
 
-            for i = 1, self.length, 1 do
-                action(self.listArray[i])
+            for item in self:iterate() do
+                action(item)
             end
         end;
 
@@ -100,7 +110,7 @@ class "List" {
             local list = new "List"()
 
             for i = index, index + count, 1 do
-                list.Add(self:getAt(i))
+                list:add(self:getAt(i))
             end
 
             return list
@@ -114,12 +124,16 @@ class "List" {
             local index = -1
 
             for i = 1, self.length, 1 do
-                if self:equals(object) then
+                if self.entries[i].equals ~= nil then
+                    if self.entries[i]:equals(object) then
+                        index = i
+                    end
+                elseif Object.equals(self.entries[i], object) then
                     index = i
                 end
             end
 
             return index
-        end;
+        end
     }
 }
