@@ -360,4 +360,3 @@ After you've saved all files, you can start Scrap Mechanic and create a new worl
 
 # Contributing
 Create a pull request in order to contribute to the project. A contribution guide will follow.
-

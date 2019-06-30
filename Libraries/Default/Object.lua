@@ -1,7 +1,6 @@
 class "Object" {
     public = {
         __construct = function (self)
-
         end;
 
         toString = function (self)

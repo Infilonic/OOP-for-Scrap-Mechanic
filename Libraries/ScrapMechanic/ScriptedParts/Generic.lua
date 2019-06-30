@@ -1,8 +1,8 @@
 class "Generic" {
      public = {
         __construct = function(self)
-        
         end;
+
         server_onCreate = function (self)
         end;
 

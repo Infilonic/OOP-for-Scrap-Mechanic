@@ -17,6 +17,7 @@ class "Shape" extends "Generic" {
             self.colorHighlight = colorHighlight
             self.poseWeightCount = poseWeightCount
         end;
+
         client_onInteract = function (self)
         end;
 
