@@ -10,7 +10,7 @@ class "List" {
         end;
 
         addRange = function (self, list)
-            for item in list:iterate() do
+            for _, item in list:iterate() do
                 self:add(item)
             end
         end;
@@ -86,7 +86,7 @@ class "List" {
                 i = i + 1
 
                 if i <= list:getLength() then
-                    return list:getAt(i)
+                    return i, list:getAt(i)
                 end
             end
 
@@ -96,7 +96,7 @@ class "List" {
         foreach = function (self, action)
             assert(action ~= nil, "Argument 'action' is nil")
 
-            for item in self:iterate() do
+            for _, item in self:iterate() do
                 action(item)
             end
         end;
