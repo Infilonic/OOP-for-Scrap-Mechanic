@@ -77,7 +77,7 @@ Your directory & file structure could look like this:
 |     +-- Textures
 +-- Scripts
 |     +--SyntaxExtensionLibrary // This is the folder, where the Syntax Extension files go in
-|     |     +-- BaseClasses
+|     |     +-- Libraries
 |     |     +-- ReservedKeywords
 |     |     +-- SCCompiler
 |     |     +-- SCInstantiator
@@ -99,11 +99,10 @@ You also need to prepare some global variables for your classes. The global vari
 
 The SyntaxConstructor object provides a function to compile and create callable global variables automatically for you.
 
-After you've written and loaded all your classes with the `dofile(filename)` function, you can call the following functions to make them accessible for Scrap Mechanic:
-- `syntaxConstructor.compiler:compile()`
-- `syntaxConstructor:initSMObjects()`
+After you've written and loaded all your classes with the `dofile(filename)` function, you can call the following function to make them accessible for Scrap Mechanic:
+- `syntaxConstructor:init()`
 
-Be advised, that these functions have to be called at the end of all other calls and operations that all of your other scripts run. Read the chapter "Best practices" in order to get a picture of how to create your mods with this syntax extension.
+Be advised, that this function has to be called at the end of all of the other calls and operations that your other scripts run. Read the chapter "Best practices" in order to get a picture of how to create your mods with this library.
 
 # Best Practices
 This section discusses the best practices on how to use the syntax extension library in combination with Scrap Mechanic mod development.
@@ -141,13 +140,12 @@ It is assumed, that you start with a blank Scrap Mechanic mod, in order to have 
 +-- ...
 ```
 - Load the `InitSyntaxConstructor.lua` file with `dofile(filename)` in the script file `Main.lua`
-- Call `syntaxConstructor.compiler:compile()` and `syntaxConstructor:initSMObjects()` at the end
+- Call `syntaxConstructor:init()` at the end
 
 ```lua
 dofile("./SyntaxExtensionLibrary/InitSyntaxConstructor.lua")
--- // Your own mod scripts that you want to load (other classes and so on)
-syntaxConstructor.compiler:compile()
-syntaxConstructor:initSMObjects()
+... -- // Your own mod scripts that you want to load (other classes and so on)
+syntaxConstructor:init()
 ```
 
 ## Write your own classes
@@ -194,12 +192,11 @@ myObj:mySecondPrint("String 1", "String 2") -- // Prints "String 1String 2"
 ## Use your class with your modded part
 We created the `Main.lua` file in the beginning, which loads the needed files and calls the needed functions to run your created classes. In order for the Syntax Extension library to register and compile your classes, you have to load them also with the `dofile(filename)` function. The best place to load them is either the `Main.lua` file or a separate file, if you have many classes and want to keep the `Main.lua` file clean.
 
-You have to load your class files before calling the `syntaxConstructor.compiler:compile()` function. Your `Main.lua` file might look like this
+You have to load your class files before calling the `syntaxConstructor:init()` function. Your `Main.lua` file might look like this
 ```lua
 dofile("./SyntaxExtensionLibrary/InitSyntaxConstructor.lua")
 dofile("./Example.lua")-- // Your own mod scripts that you want to load (other classes and so on)
-syntaxConstructor.compiler:compile()
-syntaxConstructor:initSMObjects()
+syntaxConstructor:init()
 ```
 
 To see the class in action, you have to reload your world, where your Scrap Mechanic mod is used. Right now there is no automatic way to reload all classes and recompile them.
@@ -350,8 +347,7 @@ The `Main.lua` file will look like this
 dofile("./SyntaxExtension/InitSyntaxConstructor.lua")
 dofile("./WorldCleaner/WorldCleaner.lua")
 
-syntaxConstructor.compiler:compile()
-syntaxConstructor:initSMObjects()
+syntaxConstructor:init()
 ```
 Have a look at the chapter "Use your class with your modded part" for an explanation on why the `Main.lua` file has to look like this.
 

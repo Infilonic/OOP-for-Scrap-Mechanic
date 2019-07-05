@@ -1,6 +1,8 @@
 syntaxConstructor = {
     version = 0.0;
-    initSMObjects = function (self)
+    init = function (self)
+        self.compiler:compile()
+
         for k, _ in pairs(self.manager.compiledClasses) do
             _G[k] = smClass(new(k)())
         end
@@ -16,6 +18,6 @@ dofile("./SCCompiler/SyntaxConstructorCompiler.lua")
 dofile("./SCInstantiator/SyntaxConstructorInstatiator.lua")
 dofile("./ReservedKeywords/InitKeywords.lua")
 
--- Additional libraries
+-- System libraries
 dofile("./Libraries/System/InitLibrary.lua")
 dofile("./Libraries/ScrapMechanic/InitLibrary.lua")
