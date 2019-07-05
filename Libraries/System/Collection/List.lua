@@ -126,9 +126,11 @@ class "List" {
                 if self.entries[i].equals ~= nil then
                     if self.entries[i]:equals(object) then
                         index = i
+                        break
                     end
                 elseif Object.equals(self.entries[i], object) then
                     index = i
+                    break
                 end
             end
 
