@@ -69,7 +69,7 @@ class "Dictionary" {
             assert(action ~= nil, "Argument 'action' is nil")
 
             for k, v in self:iterate() do
-                action(v)
+                action(k, v)
             end
         end;
 
