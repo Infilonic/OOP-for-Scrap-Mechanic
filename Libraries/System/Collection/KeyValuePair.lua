@@ -12,9 +12,5 @@ class "KeyValuePair" {
         getValue = function (self)
             return self.value
         end;
-
-        equals = function (self, key)
-            return self.key == key
-        end
     }
 }
