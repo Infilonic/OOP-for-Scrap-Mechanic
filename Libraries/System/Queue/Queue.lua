@@ -36,6 +36,12 @@ class "Queue" {
 
         getLength = function (self)
             return self.length
+        end;
+
+        clear = function (self)
+            self.front = nil
+            self.rear = nil
+            self.length = 0
         end
     }
 }
