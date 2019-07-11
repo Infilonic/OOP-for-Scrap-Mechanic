@@ -8,34 +8,34 @@ Because the Scrap Mechanic developers, only provide a limited Lua environment, i
 
 ## Features
 - Familiar syntax which allows the creation of classes
-	- `class "Object" { ... }`
-	- `class "Generic" extends "Object" { ... }`
-	- `new "Object"()`
+	- `class [[Object]] { ... }`
+	- `class [[Generic]] extends [[Object]] { ... }`
+	- `new [[Object]]()`
 - Supports constructors
 
 ```lua
-class "Object" {
+class [[Object]] {
     public = {
         __construct = function (self, arg1, arg2)
         end
     }
 }
 
-new "Object"(arg1, arg2)
+new [[Object]](arg1, arg2)
 ```
 
 - Ability to automatically call the constructor of the base class (no need to do it yourself)
 - Supports inheritance
 
 ```lua
-class "Animal" {
+class [[Animal]] {
     public = {
         __construct = function (self)
         end;
     }
 }
 
-class "Wolf" extends "Animal" {
+class [[Wolf]] extends [[Animal]] {
     public = {
         furrColor = "";
         __construct = function (self, furrColor)
@@ -44,7 +44,7 @@ class "Wolf" extends "Animal" {
     }
 }
 
-class "Dog" extends "Wolf" {
+class [[Dog]] extends [[Wolf]] {
     public = {
         breed = "";
         __construct = function (self, furrColor, breed)
@@ -159,7 +159,7 @@ Your class could look like this. Remember, this example shows the syntax of how 
 
 Create class:
 ```lua
-class "Example" extends "Object" {
+class [[Example]] extends [[Object]] {
     public = {
         __construct = function (self)
 
@@ -184,7 +184,7 @@ Because this syntax requires Lua tables, you have to put a `,` or a `; ` after e
 
 Create instance of the class and use this instance:
 ```lua
-myObj = new "Example"() -- // Creates a new instance of the type Example
+myObj = new [[Example]]() -- // Creates a new instance of the type Example
 myObj:myPrint(myObj:helloWorld()) -- // Prints "Hello World"
 myObj:mySecondPrint("String 1", "String 2") -- // Prints "String 1String 2"
 ```
@@ -276,7 +276,7 @@ The file `WorldCleaner.lua` will be in the same folder as our `Main.lua` file.
 The `WorldCleaner` class looks like this
 
 ```lua
-class "WorldCleaner" extends "Shape" {
+class [[WorldCleaner]] extends [[Shape]] {
     public = {
         __construct = function (self)
             self.maxChildCount = 0
@@ -331,7 +331,7 @@ You could also use the `Shape` class to create new functionalities for your scri
 
 ```lua
 ...
-WorldCleanerClass = new "Shape"()
+WorldCleanerClass = new [[Shape]]()
 WorldCleanerClass.server_onCreate = function (self) -- // Overwriting the existing server_onCreate function
     -- // Your creation logic
 end

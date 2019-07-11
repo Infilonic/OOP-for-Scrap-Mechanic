@@ -1,4 +1,4 @@
-class "List" {
+class [[List]] {
     public = {
         __construct = function (self)
             self.entries = {}
@@ -106,7 +106,7 @@ class "List" {
             assert(count >= 0, "Index out of range (count)")
             assert(self.length - (index - 1) >= count, "Invalid count argument")
 
-            local list = new "List"()
+            local list = new [[List]]()
 
             for i = index, index + count, 1 do
                 list:add(self:getAt(i))

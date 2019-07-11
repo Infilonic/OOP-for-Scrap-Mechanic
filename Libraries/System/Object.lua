@@ -1,4 +1,4 @@
-class "Object" {
+class [[Object]] {
     public = {
         __construct = function (self)
         end;

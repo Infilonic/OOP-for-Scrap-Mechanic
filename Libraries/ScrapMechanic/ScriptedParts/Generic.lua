@@ -1,4 +1,4 @@
-class "Generic" {
+class [[Generic]] {
      public = {
         __construct = function(self)
         end;

@@ -1,4 +1,4 @@
-class "KeyValuePair" {
+class [[KeyValuePair]] {
     public = {
         __construct = function (self, key, value)
             self.key = key

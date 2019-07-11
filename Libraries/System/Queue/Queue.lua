@@ -1,4 +1,4 @@
-class "Queue" {
+class [[Queue]] {
     public = {
         __construct = function (self)
             self.length = 0
@@ -7,7 +7,7 @@ class "Queue" {
         end;
 
         enqueue = function (self, object)
-            local queueElement = new "QueueElement"(object)
+            local queueElement = new [[QueueElement]](object)
 
             if self.front == nil or self.rear == nil then
                 self.front = queueElement

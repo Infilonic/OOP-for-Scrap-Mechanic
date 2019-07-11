@@ -1,4 +1,4 @@
-class "Shape" extends "Generic" {
+class [[Shape]] extends [[Generic]] {
     public = {
         __construct = function (self,
             maxChildCount,

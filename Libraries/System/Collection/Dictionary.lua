@@ -1,10 +1,10 @@
-class "Dictionary" {
+class [[Dictionary]] {
     public = {
         __construct = function (self)
             self.length = 0
-            self.keys = new "List"()
-            self.values = new "List"()
-            self.entries = new "List"()
+            self.keys = new [[List]]()
+            self.values = new [[List]]()
+            self.entries = new [[List]]()
         end;
 
         getLength = function (self)
@@ -14,7 +14,7 @@ class "Dictionary" {
         add = function (self, key, value)
             self.keys:add(key)
             self.values:add(value)
-            self.entries:add(new "KeyValuePair"(key, value))
+            self.entries:add(new [[KeyValuePair]](key, value))
             self.length = self.length + 1
         end;
 

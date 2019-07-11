@@ -1,4 +1,4 @@
-class "PooledObject" {
+class [[PooledObject]] {
     public = {
         __construct = function (self, element)
             self.lastUsed = {}

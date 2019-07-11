@@ -1,4 +1,4 @@
-class "Tool" extends "Generic" {
+class [[Tool]] extends [[Generic]] {
     public = {
         __construct = function (self)
         end;

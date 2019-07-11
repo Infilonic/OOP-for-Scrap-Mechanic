@@ -1,9 +1,9 @@
-class "ObjectPool" {
+class [[ObjectPool]] {
     public = {
         __construct = function (self, poolSize, objectType)
             self.poolSize = poolSize or 0
-            self.available = new "Queue"()
-            self.inUse = new "List"()
+            self.available = new [[Queue]]()
+            self.inUse = new [[List]]()
 
             for i = 1, self.poolSize, 1 do
                 self.available:enqueue(new(objectType)())

@@ -1,4 +1,4 @@
-class "QueueElement" {
+class [[QueueElement]] {
     public = {
         __construct = function (self, object)
             self.object = object
