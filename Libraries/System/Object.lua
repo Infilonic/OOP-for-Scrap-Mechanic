@@ -4,11 +4,15 @@ class [[Object]] {
         end;
 
         toString = function (self)
-            return tostring(self:getType())
+            return self:getType()
         end;
 
         getType = function (self)
             return self.type
+        end;
+
+        getIdentifier = function (self)
+            return tostring(self)
         end;
 
         equals = function (self, obj)
