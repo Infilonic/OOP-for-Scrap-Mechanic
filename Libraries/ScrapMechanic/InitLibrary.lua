@@ -1,3 +1,3 @@
-dofile("./ScriptedParts/Generic.lua")
-dofile("./ScriptedParts/Shape.lua")
-dofile("./ScriptedParts/Tool.lua")
+dofile("./Scriptable/Generic.lua")
+dofile("./Scriptable/Shape.lua")
+dofile("./Scriptable/Tool.lua")
