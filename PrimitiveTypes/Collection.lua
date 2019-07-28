@@ -4,6 +4,7 @@ collection = {
             table = {};
             length = 0;
             add = collection.add;
+            get = collection.get;
             remove = collection.remove;
             contains = collection.contains;
             clear = collection.clear
@@ -15,6 +16,10 @@ collection = {
     add = function (self, key, object)
         self.table[key] = object
         self.length = self.length + 1
+    end;
+
+    get = function (self, key)
+        return self.table[key]
     end;
 
     remove = function (self, key)
