@@ -1,7 +1,7 @@
 dofile("./ClassAbstraction.lua")
 dofile("./DefinitionHandle.lua")
 
-syntaxConstructor.manager = {
+syntaxExtension.typeManager = {
     registeredClasses = {};
     compiledClasses = {};
     runningDefinitionHandle = false;

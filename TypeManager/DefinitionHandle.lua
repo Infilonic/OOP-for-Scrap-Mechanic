@@ -4,8 +4,8 @@ definitionHandle = {
             concreteClass = concreteClass,
             handle = function (classDefinitionTable)
                 if classDefinitionTable ~= nil then
-                    syntaxConstructor.manager.runningDefinitionHandle.concreteClass.classDefinitionTable = classDefinitionTable
-                    syntaxConstructor.manager.runningDefinitionHandle = false
+                    syntaxExtension.typeManager.runningDefinitionHandle.concreteClass.classDefinitionTable = classDefinitionTable
+                    syntaxExtension.typeManager.runningDefinitionHandle = false
                 end
             end
         }

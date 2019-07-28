@@ -1,6 +1,6 @@
 dofile("./CompiledClass.lua")
 
-syntaxConstructor.compiler = {
+syntaxExtension.compiler = {
     compilationQueue = {
         length = 0;
         list = {};
@@ -23,7 +23,7 @@ syntaxConstructor.compiler = {
     compile = function (self)
         self:prepareCompilationQueue()
         self.rootClass = self:compileClass("Object")
-        syntaxConstructor.manager.compiledClasses.Object = self.rootClass
+        syntaxExtension.typeManager.compiledClasses.Object = self.rootClass
         self.compilationQueue:remove("Object")
         self:compileFirstLevelClasses()
         self:compileNLevelClasses()
@@ -40,11 +40,11 @@ syntaxConstructor.compiler = {
             assert((not self:hasCircularDependency(concreteClass.className, concreteClass)),
                     string.format("Circular dependency detected involving '%s' and '%s')", concreteClass.className, concreteClass.baseClass))
 
-            for k, member in pairs(syntaxConstructor.manager.compiledClasses[concreteClass.baseClass].members) do
+            for k, member in pairs(syntaxExtension.typeManager.compiledClasses[concreteClass.baseClass].members) do
                 compiledClass.members[k] = member
             end
 
-            compiledClass.base = syntaxConstructor.manager.compiledClasses[concreteClass.baseClass]
+            compiledClass.base = syntaxExtension.typeManager.compiledClasses[concreteClass.baseClass]
         end
 
         for k, member in pairs(concreteClass.classDefinitionTable.public) do
@@ -61,7 +61,7 @@ syntaxConstructor.compiler = {
         for k, concreteClass in pairs(self.compilationQueue.list) do
             if (#concreteClass.baseClass == 0) then
                 concreteClass.baseClass = self.rootClass.type
-                syntaxConstructor.manager.compiledClasses[concreteClass.className] = self:compileClass(concreteClass)
+                syntaxExtension.typeManager.compiledClasses[concreteClass.className] = self:compileClass(concreteClass)
                 self.compilationQueue:remove(k)
             end
         end
@@ -73,8 +73,8 @@ syntaxConstructor.compiler = {
 
         while (self.compilationQueue.length > 0) do
             for k, concreteClass in pairs(self.compilationQueue.list) do
-                if syntaxConstructor.manager.compiledClasses[concreteClass.baseClass] ~= nil then
-                    syntaxConstructor.manager.compiledClasses[concreteClass.className] = self:compileClass(concreteClass)
+                if syntaxExtension.typeManager.compiledClasses[concreteClass.baseClass] ~= nil then
+                    syntaxExtension.typeManager.compiledClasses[concreteClass.className] = self:compileClass(concreteClass)
                     self.compilationQueue:remove(k)
                     iterationCount = 0
                 else
@@ -84,7 +84,7 @@ syntaxConstructor.compiler = {
                     assert((iterationCount < self.compilationQueue.length),
                         string.format("Circular dependency involving '%s' and '%s'",
                             blockingClass.className,
-                            syntaxConstructor.manager.registeredClasses[blockingClass.baseClass].baseClass))
+                            syntaxExtension.typeManager.registeredClasses[blockingClass.baseClass].baseClass))
                 end
             end
         end
@@ -93,7 +93,7 @@ syntaxConstructor.compiler = {
     prepareCompilationQueue = function (self)
         self.compilationQueue:clear()
 
-        for k, class in pairs(syntaxConstructor.manager.registeredClasses) do
+        for k, class in pairs(syntaxExtension.typeManager.registeredClasses) do
             self.compilationQueue:add(k, class)
         end
     end;
@@ -105,7 +105,7 @@ syntaxConstructor.compiler = {
             if entryClass == concreteClass.baseClass then
                 circularDependency = true
             else
-                local concreteClass = syntaxConstructor.manager.registeredClasses[concreteClass.baseClass]
+                local concreteClass = syntaxExtension.typeManager.registeredClasses[concreteClass.baseClass]
                 circularDependency = self:hasCircularDependency(entryClass, concreteClass)
             end
         end

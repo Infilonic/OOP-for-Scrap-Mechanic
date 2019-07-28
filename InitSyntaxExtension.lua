@@ -1,9 +1,9 @@
-syntaxConstructor = {
+syntaxExtension = {
     version = 0.0;
     init = function (self)
         self.compiler:compile()
 
-        for k, _ in pairs(self.manager.compiledClasses) do
+        for k, _ in pairs(self.typeManager.compiledClasses) do
             _G[k] = smClass(new(k)())
         end
 
@@ -13,9 +13,9 @@ syntaxConstructor = {
 
 smClass = class
 
-dofile("./SCManager/SyntaxConstructorManager.lua")
-dofile("./SCCompiler/SyntaxConstructorCompiler.lua")
-dofile("./SCInstantiator/SyntaxConstructorInstatiator.lua")
+dofile("./TypeManager/TypeManager.lua")
+dofile("./Compiler/Compiler.lua")
+dofile("./Instantiator/Instatiator.lua")
 dofile("./ReservedKeywords/InitKeywords.lua")
 
 -- System libraries
