@@ -1,24 +1,7 @@
 dofile("./CompiledClass.lua")
 
 syntaxExtension.compiler = {
-    compilationQueue = {
-        length = 0;
-        list = {};
-
-        add = function (self, key, object)
-            self.list[key] = object
-            self.length = self.length + 1
-        end;
-
-        remove = function (self, key)
-            self.list[key] = nil
-            self.length = self.length - 1
-        end;
-
-        clear = function (self)
-            self.list = {}
-        end
-    };
+    compilationQueue = collection.new();
 
     compile = function (self)
         self:prepareCompilationQueue()
@@ -33,7 +16,7 @@ syntaxExtension.compiler = {
         local compiledClass = classCompilation.create()
 
         if (type(concreteClass) == "string") then
-            concreteClass = self.compilationQueue.list[concreteClass]
+            concreteClass = self.compilationQueue:get(concreteClass)
         end
 
         if #concreteClass.baseClass > 0 then
@@ -58,7 +41,7 @@ syntaxExtension.compiler = {
     end;
 
     compileFirstLevelClasses = function(self)
-        for k, concreteClass in pairs(self.compilationQueue.list) do
+        for k, concreteClass in pairs(self.compilationQueue.table) do
             if (#concreteClass.baseClass == 0) then
                 concreteClass.baseClass = self.rootClass.type
                 syntaxExtension.typeManager.compiledClasses[concreteClass.className] = self:compileClass(concreteClass)
@@ -72,7 +55,7 @@ syntaxExtension.compiler = {
         local blockingClass
 
         while (self.compilationQueue.length > 0) do
-            for k, concreteClass in pairs(self.compilationQueue.list) do
+            for k, concreteClass in pairs(self.compilationQueue.table) do
                 if syntaxExtension.typeManager.compiledClasses[concreteClass.baseClass] ~= nil then
                     syntaxExtension.typeManager.compiledClasses[concreteClass.className] = self:compileClass(concreteClass)
                     self.compilationQueue:remove(k)
@@ -84,7 +67,7 @@ syntaxExtension.compiler = {
                     assert((iterationCount < self.compilationQueue.length),
                         string.format("Circular dependency involving '%s' and '%s'",
                             blockingClass.className,
-                            syntaxExtension.typeManager.registeredClasses[blockingClass.baseClass].baseClass))
+                            syntaxExtension.typeManager.registeredClasses:get(blockingClass.baseClass).baseClass))
                 end
             end
         end
@@ -93,7 +76,7 @@ syntaxExtension.compiler = {
     prepareCompilationQueue = function (self)
         self.compilationQueue:clear()
 
-        for k, class in pairs(syntaxExtension.typeManager.registeredClasses) do
+        for k, class in pairs(syntaxExtension.typeManager.registeredClasses.table) do
             self.compilationQueue:add(k, class)
         end
     end;
@@ -105,7 +88,7 @@ syntaxExtension.compiler = {
             if entryClass == concreteClass.baseClass then
                 circularDependency = true
             else
-                local concreteClass = syntaxExtension.typeManager.registeredClasses[concreteClass.baseClass]
+                local concreteClass = syntaxExtension.typeManager.registeredClasses:get(concreteClass.baseClass)
                 circularDependency = self:hasCircularDependency(entryClass, concreteClass)
             end
         end
