@@ -13,6 +13,7 @@ syntaxExtension = {
 
 smClass = class
 
+dofile("./PrimitiveTypes/Init.lua")
 dofile("./TypeManager/TypeManager.lua")
 dofile("./Compiler/Compiler.lua")
 dofile("./Instantiator/Instatiator.lua")
