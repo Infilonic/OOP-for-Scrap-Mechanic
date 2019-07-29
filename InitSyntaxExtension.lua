@@ -1,16 +1,20 @@
 syntaxExtension = {
     version = 0.0;
+    initialized = false;
     init = function (self)
-        self.compiler:compile()
+        if not self.initialized then
+            self.compiler:compile()
 
-        for k, _ in pairs(self.typeManager.compiledClasses) do
-            local tempObj = new(k)()
-            if self.typeManager.isType(tempObj, "Generic") then
-                _G[k] = smClass(new(k)())
+            for k, _ in pairs(self.typeManager.compiledClasses) do
+                local tempObj = new(k)()
+                if self.typeManager.isType(tempObj, "Generic") then
+                    _G[k] = smClass(new(k)())
+                end
             end
-        end
 
-        class = smClass
+            self.initialized = true
+            class = smClass
+        end
     end
 }
 
