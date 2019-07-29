@@ -28,7 +28,7 @@ collection = {
     end;
 
     contains = function (self, key)
-        return self[key] ~= nil
+        return self.table[key] ~= nil
     end;
 
     clone = function (self)
