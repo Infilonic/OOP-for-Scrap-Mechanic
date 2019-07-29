@@ -7,7 +7,7 @@ syntaxExtension.typeManager = {
     runningDefinitionHandle = false;
 
     registerClass = function (self, className)
-        assert((self.registeredClasses:contains(className)),
+        assert((not self.registeredClasses:contains(className)),
             string.format("Tried to declare a duplicate class (%s). Select a different class name or check your class declarations.", className))
 
         local concreteClass = classAbstraction.create(className)
@@ -29,7 +29,7 @@ syntaxExtension.typeManager = {
     end;
 
     isType = function (object, typeName)
-        assert(syntaxExtension.registeredClasses:contains(typeName), string.format("Type %s does not exist", typeName))
+        assert(syntaxExtension.typeManager.registeredClasses:contains(typeName), string.format("Type %s does not exist", typeName))
 
         local isOfType = false
 
