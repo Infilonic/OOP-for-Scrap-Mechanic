@@ -1,4 +1,4 @@
-class [[Generic]] {
+class [[Scriptable]] {
      public = {
         __construct = function(self)
         end;

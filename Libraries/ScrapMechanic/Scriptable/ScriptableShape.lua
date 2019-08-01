@@ -1,4 +1,4 @@
-class [[Shape]] extends [[Generic]] {
+class [[ScriptableShape]] extends [[Scriptable]] {
     public = {
         __construct = function (self,
             maxChildCount,

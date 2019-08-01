@@ -1,4 +1,4 @@
-class [[Tool]] extends [[Generic]] {
+class [[ScriptableTool]] extends [[Scriptable]] {
     public = {
         __construct = function (self)
         end;
