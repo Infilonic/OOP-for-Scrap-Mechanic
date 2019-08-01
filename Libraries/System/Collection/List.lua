@@ -86,6 +86,16 @@ class [[List]] {
             return self:getRange(1, self.length)
         end;
 
+        toTable = function (self)
+            local concreteTable = {}
+
+            for i, object in self:iterate() do
+                table.insert(concreteTable, i, object)
+            end
+
+            return concreteTable
+        end;
+
         iterate = function (self)
             local list = self
 
