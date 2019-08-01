@@ -19,6 +19,8 @@ class [[Dictionary]] {
         end;
 
         addKeyValuePair = function (self, keyValuePair)
+            assertType(keyValuePair, [[KeyValuePair]])
+
             self.keys:add(keyValuePair:getKey())
             self.values:add(keyValuePair:getValue())
             self.entries:add(keyValuePair)
@@ -66,7 +68,7 @@ class [[Dictionary]] {
         end;
 
         foreach = function (self, action)
-            assert(action ~= nil, "Argument 'action' is nil")
+            assertType(action, [[function]])
 
             for k, v in self:iterate() do
                 action(k, v)

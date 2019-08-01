@@ -13,6 +13,7 @@ class [[QueueElement]] {
         end;
 
         setSuccessor = function (self, successor)
+            assertType(successor, [[QueueElement]])
             self.successor = successor
         end
     }

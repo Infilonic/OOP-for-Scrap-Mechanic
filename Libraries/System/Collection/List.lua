@@ -10,12 +10,15 @@ class [[List]] {
         end;
 
         addRange = function (self, list)
+            assertType(list, [[List]])
+
             for _, item in list:iterate() do
                 self:add(item)
             end
         end;
 
         insert = function (self, index, object)
+            assertType(index, [[number]])
             assert(index > 0, "Index out of range")
             assert(index <= self.length + 1, "Index out of range")
 
@@ -24,6 +27,7 @@ class [[List]] {
         end;
 
         removeAt = function (self, index)
+            assertType(index, [[number]])
             assert((index > 0 and index <= self.length), "Index out of range")
 
             table.remove(self.entries, index)
@@ -43,6 +47,7 @@ class [[List]] {
         end;
 
         getAt = function (self, index)
+            assertType(index, [[number]])
             assert((index > 0 and index <= self.length), "Index out of range")
 
             return self.entries[index]
@@ -68,6 +73,8 @@ class [[List]] {
         end;
 
         copyTo = function (self, list, index)
+            assertType(list, [[List]])
+            assertType(index, [[number]])
             assert((index > 0 and index <= self.length), "Index out of range")
 
             for i = index, self:getLength(), 1 do
@@ -94,7 +101,7 @@ class [[List]] {
         end;
 
         foreach = function (self, action)
-            assert(action ~= nil, "Argument 'action' is nil")
+            assertType(action, [[function]])
 
             for _, item in self:iterate() do
                 action(item)
@@ -102,6 +109,8 @@ class [[List]] {
         end;
 
         getRange = function (self, index, count)
+            assertType(index, [[number]])
+            assertType(count, [[number]])
             assert(index > 0, "Index out of range (index)")
             assert(count >= 0, "Index out of range (count)")
             assert(self.length - (index - 1) >= count, "Invalid count argument")

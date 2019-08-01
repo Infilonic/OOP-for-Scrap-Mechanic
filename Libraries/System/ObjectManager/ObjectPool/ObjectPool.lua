@@ -1,6 +1,9 @@
 class [[ObjectPool]] {
     public = {
         __construct = function (self, poolSize, objectType)
+            assertType(poolSize, [[number]])
+            assertType(objectType, [[PooledObject]])
+
             self.poolSize = poolSize or 0
             self.available = new [[Queue]]()
             self.inUse = new [[List]]()
@@ -23,10 +26,12 @@ class [[ObjectPool]] {
             return acquiredObject
         end;
 
-        releaseObject = function (self, object)
-            object:cleanUp()
-            self.inUse:remove(object)
-            self.available:enqueue(object)
+        releaseObject = function (self, pooledObject)
+            assertType(pooledObject, [[PooledObject]])
+
+            pooledObject:cleanUp()
+            self.inUse:remove(pooledObject)
+            self.available:enqueue(pooledObject)
         end
     }
 }
