@@ -7,7 +7,7 @@ syntaxExtension = {
 
             for k, _ in pairs(self.typeManager.compiledClasses) do
                 local tempObj = new(k)()
-                if self.typeManager.isType(tempObj, "Generic") then
+                if isType(tempObj, "Generic") then
                     _G[k] = smClass(new(k)())
                 end
             end
@@ -21,6 +21,7 @@ syntaxExtension = {
 smClass = class
 
 dofile("./PrimitiveTypes/Init.lua")
+dofile("./TypeManager/Utility.lua")
 dofile("./TypeManager/TypeManager.lua")
 dofile("./Compiler/Compiler.lua")
 dofile("./Instantiator/Instatiator.lua")
