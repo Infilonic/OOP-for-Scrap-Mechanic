@@ -6,9 +6,12 @@ syntaxExtension = {
             self.compiler:compile()
 
             for k, _ in pairs(self.typeManager.compiledClasses) do
-                local tempObj = new(k)()
-                if isType(tempObj, "Generic") then
-                    _G[k] = smClass(new(k)())
+                local object = new(k)()
+
+                if isType(object, "Generic") then
+                    _G[k] = smClass(object)
+                else
+                    _G[k] = object
                 end
             end
 
