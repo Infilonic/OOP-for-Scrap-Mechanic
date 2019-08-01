@@ -11,3 +11,9 @@ isType = function (object, typeName)
 
     return isOfType
 end
+
+function assertType (object, typeName)
+    if not typeOf(object) == typeName then
+        assert(isType(object, typeName), string.format("Type error. (%s)Object of type %s expected.", typeOf(object), typeName))
+    end
+end
