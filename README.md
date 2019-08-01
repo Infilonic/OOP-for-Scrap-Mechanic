@@ -277,7 +277,7 @@ The file `WorldCleaner.lua` will be in the same folder as our `Main.lua` file.
 The `WorldCleaner` class looks like this
 
 ```lua
-class [[WorldCleaner]] extends [[Shape]] {
+class [[WorldCleaner]] extends [[ScriptableShape]] {
     public = {
         __construct = function (self)
             self.maxChildCount = 0
@@ -325,14 +325,14 @@ class [[WorldCleaner]] extends [[Shape]] {
 }
 ```
 
-As you might have noticed, the `WorldCleaner` class inherits from the `Shape` class, which is an already built in type of the syntax extension library. You can extend from the `Shape` class whenever you need to create a new scripted shape with some default values and functions.
+As you might have noticed, the `WorldCleaner` class inherits from the `ScriptableShape` class, which is an already built in type of the syntax extension library. You can extend from the `ScriptableShape` class whenever you need to create a new scripted shape with some default values and functions.
 
-### Example usage of the Shape class
-You could also use the `Shape` class to create new functionalities for your scripted part. In this case, you could even load your files after the compilation and initialization process. You have to run the function `smClass(classInstance)` in order to use your prepared object within Scrap Mechanic.
+### Example usage of the ScriptableShape class
+You could also use the `ScriptableShape` class to create new functionalities for your scripted part. In this case, you could even load your files after the compilation and initialization process. You have to run the function `smClass(classInstance)` in order to use your prepared object within Scrap Mechanic.
 
 ```lua
 ...
-WorldCleanerClass = new [[Shape]]()
+WorldCleanerClass = new [[ScriptableShape]]()
 WorldCleanerClass.server_onCreate = function (self) -- // Overwriting the existing server_onCreate function
     -- // Your creation logic
 end
