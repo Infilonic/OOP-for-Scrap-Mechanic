@@ -1,0 +1,8 @@
+dofile("./AreaTrigger.lua")
+dofile("./Body.lua")
+dofile("./Container.lua")
+dofile("./Creation.lua")
+dofile("./Interactable.lua")
+dofile("./Joint.lua")
+dofile("./Shape.lua")
+dofile("./Tool.lua")
