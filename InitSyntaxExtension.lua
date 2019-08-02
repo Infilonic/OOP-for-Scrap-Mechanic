@@ -3,21 +3,26 @@ syntaxExtension = {
     initialized = false;
     init = function (self)
         if not self.initialized then
-            self.compiler:compile()
-
-            for k, _ in pairs(self.typeManager.compiledClasses) do
-                local object = new(k)()
-
-                if isType(object, [[Scriptable]]) then
-                    _G[k] = smClass(object)
-                else
-                    _G[k] = object
-                end
-            end
-
+            compiler:compile()
+            self:initializeScrapMechanicObjects()
             self.initialized = true
             class = smClass
         end
+    end;
+
+    initializeScrapMechanicObjects = function (self)
+        local function initSubClassesRecursive(typeName)
+            local node = self.typeManager.typeNodeCollection:get(typeName)
+            _G[node.typeName] = smClass(new(node.typeName)())
+
+            if node:hasChildren() then
+                for _, node in pairs(node.children.table) do
+                    initSubClassesRecursive(node.typeName)
+                end
+            end
+        end
+
+        initSubClassesRecursive("Scriptable")
     end
 }
 
