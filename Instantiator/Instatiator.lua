@@ -2,9 +2,9 @@ dofile("./ObjectInstance.lua")
 
 syntaxExtension.instantiator = {
     instantiateClass = function (self, className)
-        assert((syntaxExtension.typeManager.compiledClasses[className] ~= nil), string.format("Type not found (%s)", className))
+        assert((compiler.compiledTypes:get(className) ~= nil), string.format("Type not found (%s)", className))
 
-        local instance = self:createObject(syntaxExtension.typeManager.compiledClasses[className])
+        local instance = self:createObject(compiler.compiledTypes:get(className))
 
         return self:createInstanceCallable(instance)
     end;
