@@ -1,10 +1,10 @@
 function typeOf(object)
-    local concreteType
+    local concreteType = type(object)
 
-    if object.getType ~= nil and type(object.getType) == "function" then
-        concreteType = object:getType()
-    else
+    if concreteType ~= "table" then
         concreteType = type(object)
+    elseif object.getType ~= nil and type(object.getType) == "function" then
+        concreteType = object:getType()
     end
 
     return concreteType
