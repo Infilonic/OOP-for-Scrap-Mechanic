@@ -1,99 +1,82 @@
 dofile("./CompiledClass.lua")
 
-syntaxExtension.compiler = {
-    compilationQueue = collection.new();
+compiler = {
+    typeManager = syntaxExtension.typeManager;
+    compiledTypes = collection.new();
+    treeResolverQueue = {};
+    rootTreeNode = treeNode.new(nil, "Object");
 
     compile = function (self)
-        self:prepareCompilationQueue()
-        self.rootClass = self:compileClass("Object")
-        syntaxExtension.typeManager.compiledClasses.Object = self.rootClass
-        self.compilationQueue:remove("Object")
-        self:compileFirstLevelClasses()
-        self:compileNLevelClasses()
+        self:createInheritanceTree()
+        self.typeManager.registeredTypes:get("Object").baseClass = ""
+        self:compileRecursive(self.rootTreeNode)
     end;
 
-    compileClass = function (self, concreteClass)
-        local compiledClass = classCompilation.create()
+    compileRecursive = function (self, node)
+        self.compiledTypes:add(node.typeName, self:compileType(node.typeName))
+        self.typeManager.typeNodeCollection:add(node.typeName, node)
 
-        if (type(concreteClass) == "string") then
-            concreteClass = self.compilationQueue:get(concreteClass)
-        end
-
-        if #concreteClass.baseClass > 0 then
-            assert((not self:hasCircularDependency(concreteClass.className, concreteClass)),
-                    string.format("Circular dependency detected involving '%s' and '%s')", concreteClass.className, concreteClass.baseClass))
-
-            for k, member in pairs(syntaxExtension.typeManager.compiledClasses[concreteClass.baseClass].members) do
-                compiledClass.members[k] = member
-            end
-
-            compiledClass.base = syntaxExtension.typeManager.compiledClasses[concreteClass.baseClass]
-        end
-
-        for k, member in pairs(concreteClass.classDefinitionTable.public) do
-            compiledClass.members[k] = member
-        end
-
-        compiledClass.type = concreteClass.className
-        compiledClass.__construct = self:createRecursiveConstructor(compiledClass)
-
-        return compiledClass
-    end;
-
-    compileFirstLevelClasses = function(self)
-        for k, concreteClass in pairs(self.compilationQueue.table) do
-            if (#concreteClass.baseClass == 0) then
-                concreteClass.baseClass = self.rootClass.type
-                syntaxExtension.typeManager.compiledClasses[concreteClass.className] = self:compileClass(concreteClass)
-                self.compilationQueue:remove(k)
+        if node:hasChildren() then
+            for _, childNode in pairs(node.children.table) do
+                self:compileRecursive(childNode)
             end
         end
     end;
 
-    compileNLevelClasses = function(self)
-        local iterationCount = 0
-        local blockingClass
+    compileType = function (self, typeName)
+        local compiledType = classCompilation.create()
+        local baseClass = self.typeManager.registeredTypes:get(typeName).baseClass
 
-        while (self.compilationQueue.length > 0) do
-            for k, concreteClass in pairs(self.compilationQueue.table) do
-                if syntaxExtension.typeManager.compiledClasses[concreteClass.baseClass] ~= nil then
-                    syntaxExtension.typeManager.compiledClasses[concreteClass.className] = self:compileClass(concreteClass)
-                    self.compilationQueue:remove(k)
-                    iterationCount = 0
-                else
-                    blockingClass = concreteClass
-                    iterationCount = iterationCount + 1
+        if #baseClass > 0 then
+            for k, member in pairs(self.compiledTypes:get(baseClass).members) do
+                compiledType.members[k] = member
+            end
 
-                    assert((iterationCount < self.compilationQueue.length),
-                        string.format("Circular dependency involving '%s' and '%s'",
-                            blockingClass.className,
-                            syntaxExtension.typeManager.registeredClasses:get(blockingClass.baseClass).baseClass))
-                end
+            compiledType.base = self.compiledTypes:get(baseClass)
+        end
+
+        local currentClass = self.typeManager.registeredTypes:get(typeName)
+
+        for k, member in pairs(currentClass.classDefinitionTable.public) do
+            compiledType.members[k] = member
+        end
+
+        compiledType.type = typeName
+        compiledType.__construct = self:createRecursiveConstructor(compiledType)
+
+        return compiledType
+    end;
+
+    createInheritanceTree = function (self)
+        self.treeResolverQueue = self.typeManager.registeredTypes:clone()
+        self.treeResolverQueue:remove("Object")
+        self:resolveChildrenRecursive(self.rootTreeNode)
+    end;
+
+    resolveChildrenRecursive = function (self, node)
+        self:findSubClasses(node)
+
+        if node:hasChildren() then
+            for _, childNode in pairs(node.children.table) do
+                self:resolveChildrenRecursive(childNode)
             end
         end
     end;
 
-    prepareCompilationQueue = function (self)
-        self.compilationQueue:clear()
+    findSubClasses = function (self, node)
+        local typesToRemove = collection.new()
 
-        for k, class in pairs(syntaxExtension.typeManager.registeredClasses.table) do
-            self.compilationQueue:add(k, class)
-        end
-    end;
-
-    hasCircularDependency = function (self, entryClass, concreteClass)
-        local circularDependency = false
-
-        if #concreteClass.baseClass > 0 then
-            if entryClass == concreteClass.baseClass then
-                circularDependency = true
-            else
-                local concreteClass = syntaxExtension.typeManager.registeredClasses:get(concreteClass.baseClass)
-                circularDependency = self:hasCircularDependency(entryClass, concreteClass)
+        for typeName, declaration in pairs(self.treeResolverQueue.table) do
+            if declaration.baseClass == node.typeName then
+                local childNode = treeNode.new(node, typeName)
+                node.children:add(typeName, childNode)
+                typesToRemove:add(typeName, true)
             end
         end
 
-        return circularDependency
+        for typeName, _ in pairs(typesToRemove) do
+            self.treeResolverQueue:remove(typeName)
+        end
     end;
 
     createRecursiveConstructor = function (self, concreteClass)
