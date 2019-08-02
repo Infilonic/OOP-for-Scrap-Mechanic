@@ -2,17 +2,18 @@ dofile("./ClassAbstraction.lua")
 dofile("./DefinitionHandle.lua")
 
 syntaxExtension.typeManager = {
-    registeredClasses = collection.new();
-    compiledClasses = {};
+    registeredTypes = collection.new();
+    typeNodeCollection = collection.new();
     runningDefinitionHandle = false;
 
     registerClass = function (self, className)
-        assert((not self.registeredClasses:contains(className)),
+        assert((not self.registeredTypes:contains(className)),
             string.format("Tried to declare a duplicate class (%s). Select a different class name or check your class declarations.", className))
 
         local concreteClass = classAbstraction.create(className)
-        self.registeredClasses:add(className, concreteClass)
+        self.registeredTypes:add(className, concreteClass)
         self.runningDefinitionHandle = definitionHandle.create(concreteClass)
+        concreteClass.baseClass = "Object"
 
         return self.runningDefinitionHandle.handle
     end;
