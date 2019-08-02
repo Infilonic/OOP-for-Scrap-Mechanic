@@ -1,4 +1,4 @@
-isType = function (object, typeName)
+function isType (object, typeName)
     assert(syntaxExtension.typeManager.registeredClasses:contains(typeName), string.format("Type %s does not exist", typeName))
 
     local isOfType = false
