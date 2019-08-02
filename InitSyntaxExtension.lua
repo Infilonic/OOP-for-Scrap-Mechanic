@@ -8,7 +8,7 @@ syntaxExtension = {
             for k, _ in pairs(self.typeManager.compiledClasses) do
                 local object = new(k)()
 
-                if isType(object, "Generic") then
+                if isType(object, [[Scriptable]]) then
                     _G[k] = smClass(object)
                 else
                     _G[k] = object
