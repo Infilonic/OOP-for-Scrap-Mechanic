@@ -10,6 +10,6 @@ treeNode = {
     end;
 
     hasChildren = function (self)
-        return self.children:getLength() > 0
+        return self.children.length > 0
     end
 }
