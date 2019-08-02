@@ -7,6 +7,7 @@ collection = {
             get = collection.get;
             remove = collection.remove;
             contains = collection.contains;
+            clone = collection.clone;
             clear = collection.clear
         }
 
