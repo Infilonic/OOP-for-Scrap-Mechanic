@@ -1,6 +1,7 @@
 treeNode = {
-    new = function (self, typeName)
+    new = function (parent, typeName)
         local concreteNode = {
+            parent = parent;
             typeName = typeName;
             children = collection.new();
             hasChildren = treeNode.hasChildren
