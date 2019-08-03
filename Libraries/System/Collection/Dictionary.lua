@@ -28,10 +28,14 @@ class [[Dictionary]] {
         end;
 
         remove = function (self, key)
-            self.keys:remove(key)
-            self.values:remove(self.entries[key])
-            self.entries:remove(key)
-            self.length = self.length - 1
+            local index = self.keys:indexOf(key)
+
+            if index > 0 then
+                self.keys:removeAt(index)
+                self.values:removeAt(index)
+                self.entries:removeAt(index)
+                self.length = self.length - 1
+            end
         end;
 
         clear = function (self)
