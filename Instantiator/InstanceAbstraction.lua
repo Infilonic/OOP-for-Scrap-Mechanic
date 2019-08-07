@@ -1,7 +1,7 @@
-objectInstance = {
-    create = function ()
+instanceAbstraction = {
+    new = function ()
         local instance = {
-            type = "",
+            fullQualifiedTypeName = "",
             base = {}
         }
 

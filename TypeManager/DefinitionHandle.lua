@@ -1,10 +1,10 @@
 definitionHandle = {
-    create = function (concreteClass)
+    create = function (concreteType)
         local handle = {
-            concreteClass = concreteClass,
-            handle = function (classDefinitionTable)
-                if classDefinitionTable ~= nil then
-                    syntaxExtension.typeManager.runningDefinitionHandle.concreteClass.classDefinitionTable = classDefinitionTable
+            concreteType = concreteType,
+            handle = function (definitionTable)
+                if definitionTable ~= nil then
+                    syntaxExtension.typeManager.runningDefinitionHandle.concreteType.definitionTable = definitionTable
                     syntaxExtension.typeManager.runningDefinitionHandle = false
                 end
             end
