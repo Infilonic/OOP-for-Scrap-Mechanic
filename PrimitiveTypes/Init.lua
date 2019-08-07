@@ -1,4 +1,5 @@
 dofile("./TableExtension.lua")
-dofile("./Collection.lua")
+dofile("./List.lua")
+dofile("./Dictionary.lua")
 dofile("./TreeNode.lua")
 dofile("./Stack.lua")

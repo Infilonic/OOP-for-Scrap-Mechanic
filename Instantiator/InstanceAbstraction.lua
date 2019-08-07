@@ -1,4 +1,4 @@
-instanceAbstraction = {
+syntaxExtension.primitiveTypes.instanceAbstraction = {
     new = function ()
         local instance = {
             fullQualifiedTypeName = "",

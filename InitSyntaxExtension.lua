@@ -1,6 +1,8 @@
 syntaxExtension = {
     version = 0.0;
     initialized = false;
+    primitiveTypes = {};
+
     init = function (self)
         if not self.initialized then
             compiler:compile()
