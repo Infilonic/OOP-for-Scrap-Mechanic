@@ -1,4 +1,4 @@
-dofile("./CompiledClass.lua")
+dofile("./CompiledType.lua")
 
 compiler = {
     typeManager = syntaxExtension.typeManager;
@@ -8,7 +8,7 @@ compiler = {
 
     compile = function (self)
         self:createInheritanceTree()
-        self.typeManager.registeredTypes:get("Object").baseClass = ""
+        self.typeManager.registeredTypes:get("Object").baseType = ""
         self:compileRecursive(self.rootTreeNode)
     end;
 
@@ -24,27 +24,18 @@ compiler = {
     end;
 
     compileType = function (self, typeName)
-        local compiledType = classCompilation.create()
-        local baseClass = self.typeManager.registeredTypes:get(typeName).baseClass
+        local typeToCompile = compiledType.new()
+        local baseType = self.typeManager.registeredTypes:get(typeName).baseType
+        local registeredType = self.typeManager.registeredTypes:get(typeName)
+        typeToCompile.type = typeName
 
-        if #baseClass > 0 then
-            for k, member in pairs(self.compiledTypes:get(baseClass).members) do
-                compiledType.members[k] = member
-            end
-
-            compiledType.base = self.compiledTypes:get(baseClass)
+        if baseType ~= "" then
+            typeToCompile.base = self.compiledTypes:get(baseType)
         end
 
-        local currentClass = self.typeManager.registeredTypes:get(typeName)
+        typeToCompile.members = registeredType.definitionTable
 
-        for k, member in pairs(currentClass.classDefinitionTable.public) do
-            compiledType.members[k] = member
-        end
-
-        compiledType.type = typeName
-        compiledType.__construct = self:createRecursiveConstructor(compiledType)
-
-        return compiledType
+        return typeToCompile
     end;
 
     createInheritanceTree = function (self)
@@ -66,8 +57,8 @@ compiler = {
     findSubClasses = function (self, node)
         local typesToRemove = collection.new()
 
-        for typeName, declaration in pairs(self.treeResolverQueue.table) do
-            if declaration.baseClass == node.typeName then
+        for typeName, definitionTable in pairs(self.treeResolverQueue.table) do
+            if definitionTable.baseType == node.typeName then
                 local childNode = treeNode.new(node, typeName)
                 node.children:add(typeName, childNode)
                 typesToRemove:add(typeName, true)
@@ -77,18 +68,5 @@ compiler = {
         for typeName, _ in pairs(typesToRemove) do
             self.treeResolverQueue:remove(typeName)
         end
-    end;
-
-    createRecursiveConstructor = function (self, concreteClass)
-        local constructor = concreteClass.members.__construct
-
-        if concreteClass.base ~= nil then
-            constructor = function (self, ...)
-                self.base.members.__construct(self, ...)
-                self.members.__construct(self, ...)
-            end
-        end
-
-        return constructor
     end
 }
