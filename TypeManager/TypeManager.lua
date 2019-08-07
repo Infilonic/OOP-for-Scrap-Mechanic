@@ -1,4 +1,4 @@
-dofile("./ClassAbstraction.lua")
+dofile("./TypeAbstraction.lua")
 dofile("./DefinitionHandle.lua")
 
 syntaxExtension.typeManager = {
@@ -6,25 +6,25 @@ syntaxExtension.typeManager = {
     typeNodeCollection = collection.new();
     runningDefinitionHandle = false;
 
-    registerClass = function (self, className)
-        assert((not self.registeredTypes:contains(className)),
-            string.format("Tried to declare a duplicate class (%s). Select a different class name or check your class declarations.", className))
+    registerClass = function (self, typeName)
+        assert((not self.registeredTypes:contains(typeName)),
+            string.format("Tried to declare a duplicate class (%s). Select a different class name or check your class definitions.", typeName))
 
-        local concreteClass = classAbstraction.create(className)
-        self.registeredTypes:add(className, concreteClass)
-        self.runningDefinitionHandle = definitionHandle.create(concreteClass)
-        concreteClass.baseClass = "Object"
+        local concreteType = typeAbstraction.create(typeName)
+        self.registeredTypes:add(typeName, concreteType)
+        self.runningDefinitionHandle = definitionHandle.create(concreteType)
+        concreteType.baseType = "Object"
 
         return self.runningDefinitionHandle.handle
     end;
 
-    extendClass = function (self, className)
+    extendClass = function (self, typeName)
         assert(self.runningDefinitionHandle, "Tried to extend an invalid class (No running class definition handle)")
-        assert((type(className) == "string"), string.format("Expected string (arg#2, className), got %s", type(className)))
-        assert((self.runningDefinitionHandle.concreteClass.className ~= className), string.format("Can't extend from own type '%s'", className))
+        assert((type(typeName) == "string"), string.format("Expected string (arg#2, className), got %s", type(typeName)))
+        assert((self.runningDefinitionHandle.concreteType.className ~= typeName), string.format("Can't extend from own type '%s'", typeName))
 
-        local concreteClass = self.runningDefinitionHandle.concreteClass
-        concreteClass.baseClass = className
+        local concreteType = self.runningDefinitionHandle.concreteType
+        concreteType.baseType = typeName
 
         return self.runningDefinitionHandle.handle
     end
