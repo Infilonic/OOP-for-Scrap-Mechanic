@@ -1,3 +1,3 @@
-function new(className)
-	return syntaxExtension.instantiator:instantiateClass(className) -- Returns the concrete constructor
+function new(typeName)
+	return syntaxExtension.instantiator:instantiateClass(typeName) -- Returns the concrete constructor
 end
