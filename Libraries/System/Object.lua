@@ -8,7 +8,7 @@ class [[Object]] {
         end;
 
         getType = function (self)
-            return self.type
+            return self.fullQualifiedTypeName
         end;
 
         getIdentifier = function (self)
