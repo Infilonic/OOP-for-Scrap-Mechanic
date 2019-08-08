@@ -2,63 +2,63 @@ dofile("./ObjectInstance.lua")
 
 syntaxExtension.instantiator = {
     instantiate = function (self, typeName)
-        assert((compiler.compiledTypes:get(typeName) ~= nil), string.format("Type not found (%s)", typeName))
+        assert((compiler.compiledTypes.get(typeName) ~= nil), string.format("Type not found (%s)", typeName))
 
-        local compiledType = compiler.compiledtypes:get(typeName)
+        local compiledType = compiler.compiledtypes.get(typeName)
+        local closure = syntaxExtension.primitiveTypes.instanceAbstraction.new()
         local instance = {}
-        local instanceMembers = instanceAbstraction.new()
 
-        self:addPrivateMembersRecursive(instanceMembers, compiledType)
-        self:addPublicMembersRecursive(instance, instanceMembers, compiledType)
-        instanceMembers.fullQualifiedTypeName = self:resolveFullQualifiedTypeName(typeName)
+        self:addPrivateMembersRecursive(closure, compiledType)
+        self:addPublicMembersRecursive(instance, closure, compiledType)
+        closure.fullQualifiedTypeName = self:resolveFullQualifiedTypeName(typeName)
 
         return self:createInstanceCallable(instance)
     end;
 
     resolveFullQualifiedTypeName = function (self, typeName)
-        local typeNameStack = stack.new()
-        local concreteType = compiler.compiledtypes:get(typeName)
+        local typeNameStack = syntaxExtension.primitiveTypes.stack.new()
+        local compiledType = compiler.compiledtypes.get(typeName)
 
-        local function resolveRecursive(concreteType)
-            typeNameStack:push(concreteType.type)
+        local function resolveRecursive(compiledType)
+            compiledType.push(compiledType.getTypeName())
 
-            if concreteType.base ~= nil then
-                resolveRecursive(concreteType.base)
+            if compiledType.getBase() ~= nil then
+                resolveRecursive(compiledType.getBase())
             end
         end
 
-        resolveRecursive(concreteType)
+        resolveRecursive(compiledType)
 
         local fqtn = ""
 
-        while typeNameStack:getSize() > 0 do
-            fqtn = fqtn .. "." .. typeNameStack:pop()
+        while typeNameStack.getSize() > 0 do
+            fqtn = fqtn .. "." .. typeNameStack.pop()
         end
 
         return fqtn
     end;
 
-    addPrivateMembersRecursive = function (self, instanceMembers, compiledType)
-        if compiledType.base ~= nil then
-            self:addPrivateMembersRecursive(instanceMembers, compiledType.base)
+    addPrivateMembersRecursive = function (self, closure, compiledType)
+        if compiledType.getBase() ~= nil then
+            self:addPrivateMembersRecursive(closure, compiledType.getBase())
         end
 
-        for k, member in pairs(compiledType.members.private) do
-            instanceMembers[k] = member
+        for k, member in compiledType.getPrivateMembers() do
+            closure[k] = member
         end
     end;
 
-    addPublicMembersRecursive = function (self, instance, instanceMembers, compiledType)
-        if compiledType.base ~= nil then
-            self:addPublicMembersRecursive(instance, instanceMembers, compiledType)
+    addPublicMembersRecursive = function (self, instance, closure, compiledType)
+        if compiledType.getBase() ~= nil then
+            self:addPublicMembersRecursive(instance, closure, compiledType.getBase())
         end
 
-        for k, member in pairs(compiledType.members.public) do
-            instanceMembers[k] = member
+        for k, member in compiledType.getPublicMembers() do
+            closure[k] = member
 
             if type(member) == "function" then
                 instance[k] = function (...)
-                    instanceMembers[k](instanceMembers, ...)
+                    closure[k](closure, ...)
                 end
             else
                 instance[k] = member
@@ -68,7 +68,7 @@ syntaxExtension.instantiator = {
 
     createInstanceCallable = function (self, instance)
         local callable = function (...)
-            instance:__construct(...)
+            instance.__construct(...)
             instance.__construct = nil
 
             return instance

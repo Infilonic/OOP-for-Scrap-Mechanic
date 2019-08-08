@@ -2,30 +2,30 @@ dofile("./TypeAbstraction.lua")
 dofile("./DefinitionHandle.lua")
 
 syntaxExtension.typeManager = {
-    registeredTypes = collection.new();
-    typeNodeCollection = collection.new();
+    registeredTypes = syntaxExtension.primitiveTypes.dictionary.new();
+    typeNodeCollection = syntaxExtension.primitiveTypes.dictionary.new();
     runningDefinitionHandle = false;
 
     registerClass = function (self, typeName)
-        assert((not self.registeredTypes:contains(typeName)),
+        assert((not self.registeredTypes.contains(typeName)),
             string.format("Tried to declare a duplicate class (%s). Select a different class name or check your class definitions.", typeName))
 
-        local concreteType = typeAbstraction.create(typeName)
-        self.registeredTypes:add(typeName, concreteType)
-        self.runningDefinitionHandle = definitionHandle.create(concreteType)
-        concreteType.baseType = "Object"
+        local concreteType = syntaxExtension.primitiveTypes.typeAbstraction.new(typeName)
+        self.registeredTypes.add(typeName, concreteType)
+        self.runningDefinitionHandle = syntaxExtension.primitiveTypes.definitionHandle.create(concreteType)
+        concreteType.setBaseType("Object")
 
-        return self.runningDefinitionHandle.handle
+        return self.runningDefinitionHandle.getHandleCallable()
     end;
 
     extendClass = function (self, typeName)
         assert(self.runningDefinitionHandle, "Tried to extend an invalid class (No running class definition handle)")
         assert((type(typeName) == "string"), string.format("Expected string (arg#2, className), got %s", type(typeName)))
-        assert((self.runningDefinitionHandle.concreteType.className ~= typeName), string.format("Can't extend from own type '%s'", typeName))
+        assert((self.runningDefinitionHandle.getConcreteType().getTypeName() ~= typeName), string.format("Can't extend from own type '%s'", typeName))
 
-        local concreteType = self.runningDefinitionHandle.concreteType
-        concreteType.baseType = typeName
+        local concreteType = self.runningDefinitionHandle.getConcreteType()
+        concreteType.setBaseType(typeName)
 
-        return self.runningDefinitionHandle.handle
+        return self.runningDefinitionHandle.getHandleCallable()
     end
 }
