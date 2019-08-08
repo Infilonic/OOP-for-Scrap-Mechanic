@@ -14,12 +14,12 @@ syntaxExtension = {
 
     initializeScrapMechanicObjects = function (self)
         local function initSubClassesRecursive(typeName)
-            local node = self.typeManager.typeNodeCollection:get(typeName)
-            _G[node.typeName] = smClass(new(node.typeName)())
+            local node = self.typeManager.typeNodeCollection.get(typeName)
+            _G[node.getTypeName()] = smClass(self.instantiator.createScriptableInstance(node.getTypeName())())
 
-            if node:hasChildren() then
-                for _, node in pairs(node.children.table) do
-                    initSubClassesRecursive(node.typeName)
+            if node.hasChildren() then
+                for _, node in node.getChildren().iterate() do
+                    initSubClassesRecursive(node.getTypeName())
                 end
             end
         end
