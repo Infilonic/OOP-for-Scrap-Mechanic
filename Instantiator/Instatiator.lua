@@ -20,7 +20,7 @@ syntaxExtension.instantiator = {
         local compiledType = compiler.compiledTypes.get(typeName)
 
         local function resolveRecursive(compiledType)
-            compiledType.push(compiledType.getTypeName())
+            typeNameStack.push(compiledType.getTypeName())
 
             if compiledType.getBase() ~= nil then
                 resolveRecursive(compiledType.getBase())
@@ -31,7 +31,7 @@ syntaxExtension.instantiator = {
 
         local fqtn = ""
 
-        while typeNameStack.getSize() > 0 do
+        while typeNameStack.getLength() > 0 do
             fqtn = fqtn .. "." .. typeNameStack.pop()
         end
 
