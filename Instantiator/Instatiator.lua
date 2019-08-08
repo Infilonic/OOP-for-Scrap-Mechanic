@@ -75,5 +75,34 @@ syntaxExtension.instantiator = {
         end
 
         return callable
+    end;
+
+    createScriptableInstance = function (self, typeName)
+        local function getMembersRecursive(instance, cType)
+            if cType.getBase() ~= nil then
+                getMembersRecursive(instance, cType.getBase())
+            end
+
+            for k, v in pairs(cType.getPrivateMembers() or {}) do
+                instance[k] = v
+            end
+
+            for k, v in pairs(cType.getPublicMembers() or {}) do
+                instance[k] = v
+            end
+        end
+
+        local instance = {}
+        local compiledType = compiler.compiledTypes.get(typeName)
+
+        getMembersRecursive(instance, compiledType)
+
+        local callable = function (...)
+            instance:__construct(...)
+
+            return instance
+        end
+
+        return self:createInstanceCallable(instance)
     end
 }
