@@ -58,7 +58,7 @@ syntaxExtension.instantiator = {
 
             if type(member) == "function" then
                 instance[k] = function (...)
-                    closure[k](closure, ...)
+                    return closure[k](closure, ...)
                 end
             else
                 instance[k] = member
