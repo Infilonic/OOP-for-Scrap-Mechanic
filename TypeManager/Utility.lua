@@ -1,19 +1,22 @@
 function isType (object, typeName)
-    assert(syntaxExtension.typeManager.registeredTypes:contains(typeName), string.format("Type %s does not exist", typeName))
+    assert(syntaxExtension.typeManager.registeredTypes.contains(typeName), string.format("Type %s does not exist", typeName))
 
-    local isOfType = false
+    local isOfType = typeOf(object) == typeName
 
-    if object.type == typeName then
-        isOfType = true
-    elseif object.base ~= nil and type(object.base) == "table" then
-        isOfType = isType(object.base, typeName)
+    if not isOfType then
+        local typeList = string.split(typeOf(object), ".")
+
+        for _, type in typeList.iterate() do
+            if type == typeName then
+                isOfType = true
+                break;
+            end
+        end
     end
 
     return isOfType
 end
 
 function assertType (object, typeName)
-    if not typeOf(object) == typeName then
-        assert(isType(object, typeName), string.format("Type error. (%s)Object of type %s expected.", typeOf(object), typeName))
-    end
+    return assert(isType(object, typeName), string.format("Type error. (%s)Object of type %s expected.", typeOf(object), typeName))
 end
