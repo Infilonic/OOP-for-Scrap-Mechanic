@@ -1,16 +1,19 @@
 class [[PooledObject]] {
+    private = {
+        lastUsed = 0;
+    };
+
     public = {
-        __construct = function (self, element)
-            self.lastUsed = {}
-            self.element = element
+        __construct = function (self)
+            self.lastUsed = 0
         end;
 
         refresh = function (self)
-            self.lastUsed = {}
+            self.lastUsed = 0
         end;
 
         cleanUp = function (self)
-            self.element = {}
+            self:refresh()
         end
     }
 }

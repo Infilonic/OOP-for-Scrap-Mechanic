@@ -1,4 +1,10 @@
 class [[ObjectPool]] {
+    private = {
+        poolSize = 0;
+        available = nil;
+        inUse = nil
+    };
+
     public = {
         __construct = function (self, poolSize, objectType)
             assertType(poolSize, [[number]])
@@ -9,16 +15,16 @@ class [[ObjectPool]] {
             self.inUse = new [[List]]()
 
             for i = 1, self.poolSize, 1 do
-                self.available:enqueue(new(objectType)())
+                self.available.enqueue(new(objectType)())
             end
         end;
 
         acquireObject = function (self)
             local acquiredObject
 
-            if self.available:getLength() > 0 then
-                acquiredObject = self.available:dequeue()
-                self.inUse:add(acquiredObject)
+            if self.available.getLength() > 0 then
+                acquiredObject = self.available.dequeue()
+                self.inUse.add(acquiredObject)
             else
                 error("No object available")
             end
@@ -29,9 +35,9 @@ class [[ObjectPool]] {
         releaseObject = function (self, pooledObject)
             assertType(pooledObject, [[PooledObject]])
 
-            pooledObject:cleanUp()
-            self.inUse:remove(pooledObject)
-            self.available:enqueue(pooledObject)
+            pooledObject.cleanUp()
+            self.inUse.remove(pooledObject)
+            self.available.enqueue(pooledObject)
         end
     }
 }

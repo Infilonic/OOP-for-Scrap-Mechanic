@@ -1,10 +1,17 @@
 class [[Dictionary]] {
+    private = {
+        keys = nil;
+        values = nil;
+        entries = nil;
+        length = 0
+    };
+
     public = {
         __construct = function (self)
-            self.length = 0
             self.keys = new [[List]]()
             self.values = new [[List]]()
             self.entries = new [[List]]()
+            self.length = 0
         end;
 
         getLength = function (self)
@@ -12,55 +19,55 @@ class [[Dictionary]] {
         end;
 
         add = function (self, key, value)
-            self.keys:add(key)
-            self.values:add(value)
-            self.entries:add(new [[KeyValuePair]](key, value))
+            self.keys.add(key)
+            self.values.add(value)
+            self.entries.add(new [[KeyValuePair]](key, value))
             self.length = self.length + 1
         end;
 
         addKeyValuePair = function (self, keyValuePair)
             assertType(keyValuePair, [[KeyValuePair]])
 
-            self.keys:add(keyValuePair:getKey())
-            self.values:add(keyValuePair:getValue())
-            self.entries:add(keyValuePair)
+            self.keys.add(keyValuePair.getKey())
+            self.values.add(keyValuePair.getValue())
+            self.entries.add(keyValuePair)
             self.length = self.length + 1
         end;
 
         remove = function (self, key)
-            local index = self.keys:indexOf(key)
+            local index = self.keys.indexOf(key)
 
             if index > 0 then
-                self.keys:removeAt(index)
-                self.values:removeAt(index)
-                self.entries:removeAt(index)
+                self.keys.removeAt(index)
+                self.values.removeAt(index)
+                self.entries.removeAt(index)
                 self.length = self.length - 1
             end
         end;
 
         clear = function (self)
             if self.length > 0 then
-                self.keys:clear()
-                self.values:clear()
-                self.entries:clear()
+                self.keys.clear()
+                self.values.clear()
+                self.entries.clear()
                 self.length = 0
             end
         end;
 
         get = function(self, key)
-            local index = self.keys:indexOf(key)
+            local index = self.keys.indexOf(key)
 
             if index > 0 then
-                return self.values:getAt(index)
+                return self.values.getAt(index)
             end
         end;
 
         containsKey = function (self, key)
-            return self.keys:contains(key)
+            return self.keys.contains(key)
         end;
 
         containsValue = function (self, value)
-            return self.values:contains(value)
+            return self.values.contains(value)
         end;
 
         getKeys = function (self)
@@ -86,10 +93,10 @@ class [[Dictionary]] {
             local iterator = function (list, key)
                 i = i + 1
 
-                if i <= list:getLength() then
-                    local keyValuePair = list:getAt(i)
+                if i <= list.getLength() then
+                    local keyValuePair = list.getAt(i)
 
-                    return keyValuePair:getKey(), keyValuePair:getValue()
+                    return keyValuePair.getKey(), keyValuePair.getValue()
                 end
             end
 

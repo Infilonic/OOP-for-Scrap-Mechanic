@@ -1,4 +1,9 @@
 class [[List]] {
+    private = {
+        entries = nil;
+        length = 0
+    };
+
     public = {
         __construct = function (self)
             self.entries = {}
@@ -12,7 +17,7 @@ class [[List]] {
         addRange = function (self, list)
             assertType(list, [[List]])
 
-            for _, item in list:iterate() do
+            for _, item in list.iterate() do
                 self:add(item)
             end
         end;
@@ -78,7 +83,7 @@ class [[List]] {
             assert((index > 0 and index <= self.length), "Index out of range")
 
             for i = index, self:getLength(), 1 do
-                list:add(self.entries[i])
+                list.add(self:getAt(i))
             end
         end;
 
@@ -128,7 +133,7 @@ class [[List]] {
             local list = new [[List]]()
 
             for i = index, index + count, 1 do
-                list:add(self:getAt(i))
+                list.add(self:getAt(i))
             end
 
             return list
@@ -142,12 +147,10 @@ class [[List]] {
             local index = -1
 
             for i = 1, self.length, 1 do
-                if self.entries[i].equals ~= nil then
-                    if self.entries[i]:equals(object) then
-                        index = i
-                        break
-                    end
-                elseif Object.equals(self.entries[i], object) then
+                if self.entries[i].equals ~= nil and self.entries[i].equals(object) then
+                    index = i
+                    break
+                elseif self.entries[i] == object then
                     index = i
                     break
                 end

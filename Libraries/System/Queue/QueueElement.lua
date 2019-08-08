@@ -1,4 +1,9 @@
 class [[QueueElement]] {
+    private = {
+        object = nil;
+        successor = nil;
+    };
+
     public = {
         __construct = function (self, object)
             self.object = object

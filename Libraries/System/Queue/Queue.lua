@@ -1,4 +1,10 @@
 class [[Queue]] {
+    private = {
+        front = nil;
+        rear = nil;
+        length = 0
+    };
+
     public = {
         __construct = function (self)
             self.length = 0
@@ -14,7 +20,7 @@ class [[Queue]] {
                 self.rear = queueElement
             end
 
-            self.rear:setSuccessor(queueElement)
+            self.rear.setSuccessor(queueElement)
             self.rear = queueElement
             self.length = self.length + 1
         end;
@@ -22,8 +28,8 @@ class [[Queue]] {
         dequeue = function (self)
             local queueElement = self.front
 
-            if queueElement ~= nil and queueElement ~= queueElement:getSuccessor() then
-                self.front = queueElement:getSuccessor()
+            if queueElement ~= nil and queueElement ~= queueElement.getSuccessor() then
+                self.front = queueElement.getSuccessor()
                 self.length = self.length - 1
             else
                 self.front = nil
@@ -31,7 +37,7 @@ class [[Queue]] {
                 self.length = 0
             end
 
-            return queueElement:getObject()
+            return queueElement.getObject()
         end;
 
         getLength = function (self)

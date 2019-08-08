@@ -1,4 +1,9 @@
 class [[KeyValuePair]] {
+    private = {
+        key = nil,
+        value = nil
+    };
+
     public = {
         __construct = function (self, key, value)
             self.key = key
