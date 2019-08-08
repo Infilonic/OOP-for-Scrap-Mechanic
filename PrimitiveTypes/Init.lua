@@ -1,3 +1,4 @@
+dofile("./StringExtension.lua")
 dofile("./TableExtension.lua")
 dofile("./List.lua")
 dofile("./Dictionary.lua")
