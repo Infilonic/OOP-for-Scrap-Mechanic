@@ -43,7 +43,7 @@ syntaxExtension.instantiator = {
             self:addPrivateMembersRecursive(closure, compiledType.getBase())
         end
 
-        for k, member in compiledType.getPrivateMembers() do
+        for k, member in pairs(compiledType.getPrivateMembers()) do
             closure[k] = member
         end
     end;
@@ -53,7 +53,7 @@ syntaxExtension.instantiator = {
             self:addPublicMembersRecursive(instance, closure, compiledType.getBase())
         end
 
-        for k, member in compiledType.getPublicMembers() do
+        for k, member in pairs(compiledType.getPublicMembers()) do
             closure[k] = member
 
             if type(member) == "function" then
