@@ -1,6 +1,11 @@
 class [[Tool]] extends [[WorldObject]] {
+    private = {
+        tool = nil
+    };
+
     public = {
         __construct = function (self, tool)
+            self.base:__construct(tool)
             self.tool = self.worldObject
         end;
 
@@ -55,7 +60,7 @@ class [[Tool]] extends [[WorldObject]] {
         setTpRenderables = function (self, renderables)
             assertType(renderables, [[List]])
 
-            self.tool:setTpRenderables(renderables:toTable())
+            self.tool:setTpRenderables(renderables.toTable())
         end;
 
         updateFpAnimation = function (self, name, time, weight, looping)
@@ -78,7 +83,7 @@ class [[Tool]] extends [[WorldObject]] {
         setFpRenderables = function (self, renderables)
             assertType(renderables, [[List]])
 
-            self.tool:setFpRenderables(renderables:toTable())
+            self.tool:setFpRenderables(renderables.toTable())
         end;
 
         updateFpCamera = function (self, fov, offset, weight, bobbing)
@@ -170,12 +175,6 @@ class [[Tool]] extends [[WorldObject]] {
             assertType(jointName, [[string]])
 
             self.tool:getFpBonePos(jointName)
-        end;
-
-        equals = function (self, tool)
-            assertType(tool, [[Tool]])
-
-            return self.base.equals(self, tool)
         end
     }
 }

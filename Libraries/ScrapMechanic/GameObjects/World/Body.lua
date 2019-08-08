@@ -1,6 +1,11 @@
 class [[Body]] extends [[WorldObject]] {
+    private = {
+        body = nil
+    };
+
     public = {
         __construct = function (self, body)
+            self.base:__construct(body)
             self.body = self.worldObject
         end;
 
@@ -133,12 +138,6 @@ class [[Body]] extends [[WorldObject]] {
             assertType(erasable, [[booelan]])
 
             self.body:setErasable(erasable)
-        end;
-
-        equals = function (self, body)
-            assertType(body, [[Body]])
-
-            return self.base.equals(self, body)
         end
     }
 }

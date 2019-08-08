@@ -1,4 +1,8 @@
 class [[Container]] {
+    private = {
+        container = nil;
+    };
+
     public = {
         __construct = function (self, container)
             assertType(container, [[userdata]])
@@ -24,12 +28,6 @@ class [[Container]] {
 
         isEmpty = function (self)
             return self.container:isEmpty()
-        end;
-
-        equals = function (self, container)
-            assertType(container, [[Container]])
-
-            return self.container == container.container
         end
     }
 }

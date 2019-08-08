@@ -1,6 +1,11 @@
 class [[Interactable]] extends [[WorldObject]] {
+    private = {
+        interactable = nil
+    };
+
     public = {
         __construct = function (self, interactable)
+            self.base:__construct(interactable)
             self.interactable = self.worldObject
         end;
 
@@ -130,12 +135,6 @@ class [[Interactable]] extends [[WorldObject]] {
             assertType(index, [[number]])
 
             return self.interactable:getContainer(index)
-        end;
-
-        equals = function (self, interactable)
-            assertType(interactable, [[Interactable]])
-
-            return self.base.equals(self, interactable)
         end
     }
 }

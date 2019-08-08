@@ -1,6 +1,11 @@
 class [[Shape]] extends [[WorldObject]] {
+    private = {
+        shape = nil
+    };
+
     public = {
         __construct = function (self, shape)
+            self.base:__construct(shape)
             self.shape = self.worldObject
         end;
 
@@ -108,12 +113,6 @@ class [[Shape]] extends [[WorldObject]] {
             assertType(attackLevel, [[number]])
 
             self.shape:destroyShape(attackLevel)
-        end;
-
-        equals = function (self, shape)
-            assertType(shape, [[Shape]])
-
-            return self.base.equals(self, shape)
         end
     }
 }

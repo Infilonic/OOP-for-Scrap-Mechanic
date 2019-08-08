@@ -1,6 +1,11 @@
 class [[AreaTrigger]] extends [[WorldObject]] {
+    private = {
+        areaTrigger = nil
+    };
+
     public = {
         __construct = function (self, areaTrigger)
+            self.base:__construct(areaTrigger)
             self.areaTrigger = self.worldObject
         end;
 
@@ -34,12 +39,6 @@ class [[AreaTrigger]] extends [[WorldObject]] {
             assertType(position, [[userdata]])
 
             self.areaTrigger:setWorldPosition(position)
-        end;
-
-        equals = function (self, areaTrigger)
-            assertType(areaTrigger, [[AreaTrigger]])
-
-            return self.base.equals(self, areaTrigger)
         end
     }
 }

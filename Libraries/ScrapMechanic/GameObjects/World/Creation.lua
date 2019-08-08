@@ -1,30 +1,28 @@
 class [[Creation]] {
+    private = {
+        bodies = nil;
+        uuid = nil;
+        destructable = true;
+        buildable = true;
+        paintable = true;
+        connectable = true;
+        liftable = true;
+        usable = true;
+        erasble = true;
+        lastChangedTick = 0;
+    };
+
     public = {
         __construct = function (self, bodies)
             assertType(bodies, [[List]])
 
             self.bodies = bodies
             self.uuid = sm.uuid.new()
-            self.destructable = true
-            self.buildable = true
-            self.paintable = true
-            self.connectable = true
-            self.liftable = true
-            self.usable = true
-            self.erasble = true
             self.lastChangedTick = sm.game.getCurrentTick()
         end;
 
-        foreachBody = function (self, action)
-            assertType(action, [[function]])
-
-            for _, body in self:iterate() do
-                 action(body)
-            end
-        end;
-
         iterate = function (self)
-            return self.bodies:iterate()
+            return self.bodies.iterate()
         end;
 
         getBodies = function (self)
@@ -85,7 +83,7 @@ class [[Creation]] {
         setDestructable = function (self, destructable)
             assertType(destructable, [[boolean]])
 
-            self:foreachBody(function (body) body:setDestructable(destructable) end)
+            self.bodies.foreach(function (body) body:setDestructable(destructable) end)
             self.destructable = destructable
         end;
 
@@ -96,7 +94,7 @@ class [[Creation]] {
         setBuildable = function (self, buildable)
             assertType(buildable, [[boolean]])
 
-            self:foreachBody(function (body) body:setBuildable(buildable) end)
+            self.bodies.foreach(function (body) body:setBuildable(buildable) end)
             self.buildable = buildable
         end;
 
@@ -107,7 +105,7 @@ class [[Creation]] {
         setPaintable = function (self, paintable)
             assertType(paintable, [[boolean]])
 
-            self:foreachBody(function (body) body:setPaintable(paintable) end)
+            self.bodies.foreach(function (body) body:setPaintable(paintable) end)
             self.paintable = paintable
         end;
 
@@ -118,7 +116,7 @@ class [[Creation]] {
         setConnectable = function (self, connectable)
             assertType(connectable, [[boolean]])
 
-            self:foreachBody(function (body) body:setConnectable(connectable) end)
+            self.bodies.foreach(function (body) body:setConnectable(connectable) end)
             self.connectable = connectable
         end;
 
@@ -129,7 +127,7 @@ class [[Creation]] {
         setLiftable = function (self, liftable)
             assertType(liftable, [[boolean]])
 
-            self:foreachBody(function (body) body:setLiftable(liftable) end)
+            self.bodies.foreach(function (body) body:setLiftable(liftable) end)
             self.liftable = liftable
         end;
 
@@ -140,7 +138,7 @@ class [[Creation]] {
         setUsable = function (self, usable)
             assertType(usable, [[boolean]])
 
-            self:foreachBody(function (body) body:setUsable(usable) end)
+            self.bodies.foreach(function (body) body:setUsable(usable) end)
             self.usable = usable
         end;
 
@@ -151,14 +149,14 @@ class [[Creation]] {
         setErasable = function (self, erasble)
             assertType(erasble, [[boolean]])
 
-            self:foreachBody(function (body) body:setErasable(erasble) end)
+            self.bodies.foreach(function (body) body:setErasable(erasble) end)
             self.erasble = erasble
         end;
 
         equals = function (self, creation)
             assertType(creation, [[Creation]])
 
-            return self:getUuid() == creation:getUuid()
+            return self:getUuid() == creation.getUuid()
         end
     }
 }

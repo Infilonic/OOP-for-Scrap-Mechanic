@@ -1,6 +1,11 @@
 class [[Joint]] extends [[WorldObject]] {
+    private = {
+        joint = nil
+    };
+
     public = {
         __construct = function (self, joint)
+            self.base:__construct(joint)
             self.joint = self.worldObject
         end;
 
@@ -82,11 +87,5 @@ class [[Joint]] extends [[WorldObject]] {
 
             self.joint:setTargetAngle(length, velocity, maxImpulse)
         end;
-
-        equals = function (self, joint)
-            assertType(joint, [[Joint]])
-
-            return self.base.equals(self, joint)
-        end
     }
 }

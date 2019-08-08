@@ -1,4 +1,8 @@
 class [[WorldObject]] {
+    private = {
+        worldObject = nil
+    };
+
     public = {
         __construct = function (self, worldObject)
             assertType(worldObject, [[userdata]])
@@ -10,10 +14,14 @@ class [[WorldObject]] {
             return self.worldObject:getId()
         end;
 
+        getWorldObject = function (self)
+            return self.worldObject
+        end;
+
         equals = function (self, worldObject)
             assertType(worldObject, [[WorldObject]])
 
-            return self:getId() == worldObject:getId()
+            return self:getId() == worldObject.getId()
         end
     }
 }

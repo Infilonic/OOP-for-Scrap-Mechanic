@@ -1,6 +1,12 @@
 class [[Character]] extends [[WorldObject]] {
+    private = {
+        character = nil;
+        player = nil
+    };
+
     public = {
         __construct = function (self, character)
+            self.base:__construct(character)
             self.character = self.worldObject
             self.player = new [[Player]](self.character:getPlayer())
         end;
@@ -35,12 +41,6 @@ class [[Character]] extends [[WorldObject]] {
 
         isCrouching = function (self)
             return self.character:isCrouching()
-        end;
-
-        equals = function (self, character)
-            assertType(character, [[Character]])
-
-            return self.base.equals(self, character)
         end
     }
 }
