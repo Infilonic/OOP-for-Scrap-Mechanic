@@ -1,4 +1,4 @@
-dofile("./ObjectInstance.lua")
+dofile("./InstanceAbstraction.lua")
 
 syntaxExtension.instantiator = {
     instantiate = function (self, typeName)
