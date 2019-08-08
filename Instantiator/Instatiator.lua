@@ -29,9 +29,9 @@ syntaxExtension.instantiator = {
 
         resolveRecursive(compiledType)
 
-        local fqtn = ""
+        local fqtn = typeNameStack.pop()
 
-        while typeNameStack.getLength() > 0 do
+        while typeNameStack.getLength() > 0 and typeNameStack.peek() ~= "" do
             fqtn = fqtn .. "." .. typeNameStack.pop()
         end
 
@@ -96,6 +96,7 @@ syntaxExtension.instantiator = {
         local compiledType = compiler.compiledTypes.get(typeName)
 
         getMembersRecursive(instance, compiledType)
+        instance.fullQualifiedTypeName = self:resolveFullQualifiedTypeName(typeName)
 
         local callable = function (...)
             instance:__construct(...)
