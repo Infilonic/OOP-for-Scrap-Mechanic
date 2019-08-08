@@ -16,7 +16,7 @@ class [[Object]] {
         end;
 
         equals = function (self, obj)
-            return self == obj
+            return self:getIdentifier() == obj.getIdentifier()
         end
     }
 }
