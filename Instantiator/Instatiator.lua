@@ -4,7 +4,7 @@ syntaxExtension.instantiator = {
     instantiate = function (self, typeName)
         assert((compiler.compiledTypes.get(typeName) ~= nil), string.format("Type not found (%s)", typeName))
 
-        local compiledType = compiler.compiledtypes.get(typeName)
+        local compiledType = compiler.compiledTypes.get(typeName)
         local closure = syntaxExtension.primitiveTypes.instanceAbstraction.new()
         local instance = {}
 
@@ -17,7 +17,7 @@ syntaxExtension.instantiator = {
 
     resolveFullQualifiedTypeName = function (self, typeName)
         local typeNameStack = syntaxExtension.primitiveTypes.stack.new()
-        local compiledType = compiler.compiledtypes.get(typeName)
+        local compiledType = compiler.compiledTypes.get(typeName)
 
         local function resolveRecursive(compiledType)
             compiledType.push(compiledType.getTypeName())
