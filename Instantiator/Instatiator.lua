@@ -103,6 +103,6 @@ syntaxExtension.instantiator = {
             return instance
         end
 
-        return self:createInstanceCallable(instance)
+        return callable
     end
 }
