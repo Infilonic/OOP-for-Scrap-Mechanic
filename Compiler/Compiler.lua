@@ -13,7 +13,7 @@ compiler = {
     end;
 
     compileRecursive = function (self, node)
-        self.compiledTypes.add(node.typeName, self:compileType(node.getTypeName()))
+        self.compiledTypes.add(node.getTypeName(), self:compileType(node.getTypeName()))
         self.typeManager.typeNodeCollection.add(node.getTypeName(), node)
 
         if node.hasChildren() then

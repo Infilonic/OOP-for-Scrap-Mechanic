@@ -7,12 +7,12 @@ syntaxExtension.typeManager = {
     runningDefinitionHandle = false;
 
     registerClass = function (self, typeName)
-        assert((not self.registeredTypes.contains(typeName)),
+        assert((not self.registeredTypes.containsKey(typeName)),
             string.format("Tried to declare a duplicate class (%s). Select a different class name or check your class definitions.", typeName))
 
         local concreteType = syntaxExtension.primitiveTypes.typeAbstraction.new(typeName)
         self.registeredTypes.add(typeName, concreteType)
-        self.runningDefinitionHandle = syntaxExtension.primitiveTypes.definitionHandle.create(concreteType)
+        self.runningDefinitionHandle = syntaxExtension.primitiveTypes.definitionHandle.new(concreteType)
         concreteType.setBaseType("Object")
 
         return self.runningDefinitionHandle.getHandleCallable()
