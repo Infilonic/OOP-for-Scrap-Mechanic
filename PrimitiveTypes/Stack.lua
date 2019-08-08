@@ -1,11 +1,12 @@
 syntaxExtension.primitiveTypes.stack = {
     new = function ()
+        local primitiveTypes = syntaxExtension.primitiveTypes
         local closure = {
-            items = syntaxExtension.primitiveTypes.dictionary.new(),
-            push = syntaxExtension.primitiveTypes.stack.push,
-            pop = syntaxExtension.primitiveTypes.stack.pop,
-            peek = syntaxExtension.primitiveTypes.stack.peek,
-            getLength = syntaxExtension.primitiveTypes.stack.getLength
+            items = primitiveTypes.dictionary.new(),
+            push = primitiveTypes.stack.push,
+            pop = primitiveTypes.stack.pop,
+            peek = primitiveTypes.stack.peek,
+            getLength = primitiveTypes.stack.getLength
         }
 
         local concreteStack = {

@@ -1,15 +1,17 @@
 syntaxExtension.primitiveTypes.dictionary = {
     new = function ()
+        local primitiveTypes = syntaxExtension.primitiveTypes
         local closure = {
             table = {};
             length = 0;
-            add = syntaxExtension.primitiveTypes.dictionary.add;
-            get = syntaxExtension.primitiveTypes.dictionary.get;
-            remove = syntaxExtension.primitiveTypes.dictionary.remove;
-            containsKey = syntaxExtension.primitiveTypes.dictionary.containsKey;
-            getLength = syntaxExtension.primitiveTypes.dictionary.getLength;
-            clone = syntaxExtension.primitiveTypes.dictionary.clone;
-            clear = syntaxExtension.primitiveTypes.dictionary.clear
+            add = primitiveTypes.dictionary.add;
+            get = primitiveTypes.dictionary.get;
+            remove = primitiveTypes.dictionary.remove;
+            iterate = primitiveTypes.dictionary.iterate;
+            containsKey = primitiveTypes.dictionary.containsKey;
+            getLength = primitiveTypes.dictionary.getLength;
+            clone = primitiveTypes.dictionary.clone;
+            clear = primitiveTypes.dictionary.clear
         }
 
         local concreteCollection = {
@@ -23,6 +25,10 @@ syntaxExtension.primitiveTypes.dictionary = {
 
             remove = function (key)
                 closure:remove(key)
+            end;
+
+            iterate = function ()
+                return closure:iterate()
             end;
 
             containsKey = function (key)
@@ -75,7 +81,7 @@ syntaxExtension.primitiveTypes.dictionary = {
         local clonedCollection = syntaxExtension.primitiveTypes.dictionary.new()
 
         for key, value in pairs(self.table) do
-            clonedCollection:add(key, value)
+            clonedCollection.add(key, value)
         end
 
         return clonedCollection

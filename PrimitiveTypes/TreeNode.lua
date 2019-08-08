@@ -21,7 +21,7 @@ syntaxExtension.primitiveTypes.treeNode = {
             end;
 
             getChildren = function ()
-                return closure:getChildren();
+                return closure:getChildren()
             end;
 
             hasChildren = function ()

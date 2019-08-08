@@ -1,16 +1,17 @@
 syntaxExtension.primitiveTypes.list = {
     new = function ()
+        local primitiveTypes = syntaxExtension.primitiveTypes
         local closure = {
             table = {};
             length = 0;
-            add = syntaxExtension.primitiveTypes.list.add;
-            getAt = syntaxExtension.primitiveTypes.list.getAt;
-            removeAt = syntaxExtension.primitiveTypes.list.removeAt;
-            iterate = syntaxExtension.primitiveTypes.list.iterate;
-            contains = syntaxExtension.primitiveTypes.list.contains;
-            getLength = syntaxExtension.primitiveTypes.list.getLength;
-            clone = syntaxExtension.primitiveTypes.list.clone;
-            clear = syntaxExtension.primitiveTypes.list.clear
+            add = primitiveTypes.list.add;
+            getAt = primitiveTypes.list.getAt;
+            removeAt = primitiveTypes.list.removeAt;
+            iterate = primitiveTypes.list.iterate;
+            contains = primitiveTypes.list.contains;
+            getLength = primitiveTypes.list.getLength;
+            clone = primitiveTypes.list.clone;
+            clear = primitiveTypes.list.clear
         }
 
         local concreteCollection = {
