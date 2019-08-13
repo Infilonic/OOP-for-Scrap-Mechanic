@@ -12,6 +12,10 @@ Because the Scrap Mechanic developers, only provide a limited Lua environment, i
 	- `class [[Generic]] extends [[Object]] { ... }`
 	- `new [[Object]]()`
 - Supports constructors
+- Supports inheritance
+- Supports access modifiers
+- Ability to override base methods
+- Ability to call overriden base methods `self.base.someBaseFunction(self)`
 
 ```lua
 class [[Object]] {
@@ -35,12 +39,6 @@ class [[Object]] {
 obj = new [[Object]](arg1, arg2)
 result = obj.calculate()
 ```
-
-- Supports inheritance
-- Supports access modifiers
-- Ability to override base methods
-- Ability to call overriden base methods `self.base.someBaseFunction(self)`
-
 ```lua
 class [[Animal]] {
     public = {
