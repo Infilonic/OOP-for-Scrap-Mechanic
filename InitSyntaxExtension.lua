@@ -30,12 +30,7 @@ syntaxExtension = {
 
 smClass = class
 
-dofile("./PrimitiveTypes/Init.lua")
-dofile("./TypeManager/Utility.lua")
-dofile("./TypeManager/TypeManager.lua")
-dofile("./Compiler/Compiler.lua")
-dofile("./Instantiator/Instatiator.lua")
-dofile("./ReservedKeywords/InitKeywords.lua")
+dofile("./TypeManager/Init.lua")
 
 -- System libraries
 dofile("./Libraries/System/InitLibrary.lua")

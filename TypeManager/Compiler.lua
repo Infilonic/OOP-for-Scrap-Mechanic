@@ -1,5 +1,3 @@
-dofile("./CompiledType.lua")
-
 compiler = {
     typeManager = syntaxExtension.typeManager;
     compiledTypes = syntaxExtension.primitiveTypes.dictionary.new();

@@ -1,6 +1,3 @@
-dofile("./TypeAbstraction.lua")
-dofile("./DefinitionHandle.lua")
-
 syntaxExtension.typeManager = {
     registeredTypes = syntaxExtension.primitiveTypes.dictionary.new();
     typeNodeCollection = syntaxExtension.primitiveTypes.dictionary.new();

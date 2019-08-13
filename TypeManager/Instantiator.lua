@@ -1,5 +1,3 @@
-dofile("./InstanceAbstraction.lua")
-
 syntaxExtension.instantiator = {
     instantiate = function (self, typeName)
         assert((compiler.compiledTypes.get(typeName) ~= nil), string.format("Type not found (%s)", typeName))
