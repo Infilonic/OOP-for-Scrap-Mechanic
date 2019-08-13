@@ -1,21 +1,22 @@
 # Lua syntax extension for Scrap Mechanic
-Ever wanted to write cleaner code, that not only looks good, but helps you to write more reusable code?
+Write cleaner, more reliable, reusable and maintainable code with the help of this library. Elevate your current projects and create complex systems with ease.
 
 ## What is this?
-This project enables familiar object oriented syntax in Lua for the game Scrap Mechanic. Right now the project does not support many features known in other languages like C#, Java etc.
+This project enables familiar syntax and advanced concepts known in the object oriented paradigm for Lua in the game Scrap Mechanic.
 
-Because the Scrap Mechanic developers, only provide a limited Lua environment, it is currently (14.05.2019) not possible to implement more advanced functionalities, like more advanced access modifiers, finalizers etc.
+## Usage
+Check the wiki pages of this repository to learn more about utilising this library.
 
 ## Features
-- Familiar syntax which allows the creation of classes
+- Familiar syntax which enables the creation of custom datatypes
 	- `class [[Object]] { ... }`
 	- `class [[Generic]] extends [[Object]] { ... }`
-	- `new [[Object]]()`
+	- `new [[Generic]]()`
 - Supports constructors
 - Supports inheritance
 - Supports access modifiers
 - Ability to override base methods
-- Ability to call overriden base methods `self.base.someBaseFunction(self)`
+- Ability to call overridden base methods `self.base.someBaseFunction(self)`
 
 ```lua
 class [[Object]] {
