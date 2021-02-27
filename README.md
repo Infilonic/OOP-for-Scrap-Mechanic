@@ -1,3 +1,5 @@
+**This repository is archived**
+
 # Lua syntax extension for Scrap Mechanic
 Write cleaner, more reliable, reusable and maintainable code with the help of this library. Elevate your current projects and create complex systems with ease.
 
